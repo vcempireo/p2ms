@@ -1,0 +1,840 @@
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T02:36:51.666Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T02:36:51.667Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T02:36:51.669Z] Checked if tokens are valid: false, expires at: 1768876126511
+[debug] [2026-02-04T02:36:51.669Z] Checked if tokens are valid: false, expires at: 1768876126511
+[debug] [2026-02-04T02:36:51.671Z] > refreshing access token with scopes: []
+[debug] [2026-02-04T02:36:51.675Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-04T02:36:51.675Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T02:36:51.758Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T02:36:51.761Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T02:36:51.762Z] Checked if tokens are valid: false, expires at: 1768876126511
+[debug] [2026-02-04T02:36:51.762Z] Checked if tokens are valid: false, expires at: 1768876126511
+[debug] [2026-02-04T02:36:51.762Z] > refreshing access token with scopes: []
+[debug] [2026-02-04T02:36:51.765Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-04T02:36:51.765Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T02:36:51.892Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-04T02:36:51.901Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T02:36:51.942Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T02:36:51.946Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-04T02:36:51.946Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T02:36:51.958Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T02:36:52.200Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T02:36:52.208Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-04T02:36:52.227Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:52.227Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:52.260Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:52.262Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:52.262Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:52.262Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:52.262Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-04T02:36:52.264Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T02:36:52.271Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-04T02:36:52.271Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T02:36:52.275Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-04T02:36:52.275Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T02:36:53.023Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T02:36:53.025Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-04T02:36:53.031Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:53.033Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:53.080Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:53.081Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:53.092Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:53.093Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:53.093Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-04T02:36:53.093Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T02:36:53.103Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-04T02:36:53.107Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T02:36:53.118Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-04T02:36:53.118Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T02:36:53.370Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-04T02:36:53.370Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-04T02:36:53.414Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-04T02:36:53.414Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-04T02:36:53.431Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-04T02:36:53.431Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T02:36:53.463Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T02:36:53.463Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T02:36:53.464Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:53.464Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:53.464Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T02:36:54.223Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-04T02:36:54.226Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-04T02:36:54.253Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-04T02:36:54.261Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-04T02:36:54.308Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-04T02:36:54.308Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-04T02:36:54.477Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T02:36:54.478Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T02:36:54.488Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T02:36:54.489Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T02:36:54.543Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T02:36:54.546Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T02:36:54.546Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:54.546Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:54.546Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T02:36:54.561Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T02:36:54.561Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T02:36:54.564Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:54.564Z] Checked if tokens are valid: true, expires at: 1770176210947
+[debug] [2026-02-04T02:36:54.564Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T02:36:54.758Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T02:36:54.759Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T02:36:54.764Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T02:36:54.764Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T02:36:54.799Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T02:36:54.800Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T02:36:54.815Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T02:36:54.815Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T04:20:32.070Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T04:20:32.071Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T04:20:32.073Z] Checked if tokens are valid: false, expires at: 1770176210947
+[debug] [2026-02-04T04:20:32.074Z] Checked if tokens are valid: false, expires at: 1770176210947
+[debug] [2026-02-04T04:20:32.075Z] > refreshing access token with scopes: []
+[debug] [2026-02-04T04:20:32.079Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-04T04:20:32.079Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T04:20:32.183Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T04:20:32.185Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T04:20:32.187Z] Checked if tokens are valid: false, expires at: 1770176210947
+[debug] [2026-02-04T04:20:32.188Z] Checked if tokens are valid: false, expires at: 1770176210947
+[debug] [2026-02-04T04:20:32.191Z] > refreshing access token with scopes: []
+[debug] [2026-02-04T04:20:32.192Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-04T04:20:32.193Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T04:20:32.310Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-04T04:20:32.311Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T04:20:32.348Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T04:20:32.365Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-04T04:20:32.365Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T04:20:32.385Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T04:20:32.657Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T04:20:32.658Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-04T04:20:32.681Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.681Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.730Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.735Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.738Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.738Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.739Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-04T04:20:32.743Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T04:20:32.757Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-04T04:20:32.762Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T04:20:32.767Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-04T04:20:32.767Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T04:20:32.923Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T04:20:32.923Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-04T04:20:32.925Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.926Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.974Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.975Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.975Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.975Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:32.981Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-04T04:20:32.981Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T04:20:32.990Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-04T04:20:32.990Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T04:20:33.000Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-04T04:20:33.000Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T04:20:33.906Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-04T04:20:33.906Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-04T04:20:33.907Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-04T04:20:33.907Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-04T04:20:33.910Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-04T04:20:33.910Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-04T04:20:34.066Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-04T04:20:34.066Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-04T04:20:34.105Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-04T04:20:34.106Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-04T04:20:34.111Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-04T04:20:34.111Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T04:20:34.126Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T04:20:34.126Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T04:20:34.127Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:34.127Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:34.127Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T04:20:35.180Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T04:20:35.180Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T04:20:35.189Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T04:20:35.189Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T04:20:35.241Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T04:20:35.242Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T04:20:35.242Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:35.242Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:35.242Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T04:20:35.252Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T04:20:35.252Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T04:20:35.252Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:35.252Z] Checked if tokens are valid: true, expires at: 1770182431366
+[debug] [2026-02-04T04:20:35.252Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T04:20:35.443Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T04:20:35.443Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T04:20:35.448Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T04:20:35.448Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T04:20:36.326Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T04:20:36.335Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T04:20:36.345Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T04:20:36.345Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:37:47.850Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:37:47.851Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:37:47.853Z] Checked if tokens are valid: false, expires at: 1770182431366
+[debug] [2026-02-04T07:37:47.854Z] Checked if tokens are valid: false, expires at: 1770182431366
+[debug] [2026-02-04T07:37:47.854Z] > refreshing access token with scopes: []
+[debug] [2026-02-04T07:37:47.857Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-04T07:37:47.857Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T07:37:47.924Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:37:47.925Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:37:47.925Z] Checked if tokens are valid: false, expires at: 1770182431366
+[debug] [2026-02-04T07:37:47.925Z] Checked if tokens are valid: false, expires at: 1770182431366
+[debug] [2026-02-04T07:37:47.926Z] > refreshing access token with scopes: []
+[debug] [2026-02-04T07:37:47.926Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-04T07:37:47.926Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T07:37:47.985Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-04T07:37:47.986Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T07:37:48.010Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T07:37:48.038Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-04T07:37:48.039Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T07:37:48.062Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T07:37:48.323Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:37:48.327Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-04T07:37:48.345Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.345Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.369Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.369Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.370Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.370Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.371Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-04T07:37:48.371Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:37:48.374Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-04T07:37:48.374Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:37:48.377Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-04T07:37:48.378Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:37:48.488Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:37:48.488Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-04T07:37:48.492Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.493Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.512Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.513Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.513Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.513Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:48.513Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-04T07:37:48.514Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:37:48.517Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-04T07:37:48.518Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:37:48.521Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-04T07:37:48.521Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:37:49.445Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-04T07:37:49.446Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-04T07:37:49.504Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-04T07:37:49.504Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-04T07:37:49.524Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-04T07:37:49.525Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-04T07:37:49.546Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-04T07:37:49.546Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-04T07:37:49.624Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-04T07:37:49.624Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-04T07:37:49.644Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-04T07:37:49.646Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:37:49.652Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:37:49.652Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:37:49.655Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:49.655Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:49.655Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T07:37:49.875Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:37:49.876Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:37:49.878Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:37:49.878Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:37:49.918Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:37:49.918Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:37:49.918Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:49.918Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:49.919Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:37:49.933Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:37:49.933Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:37:49.933Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:49.933Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:37:49.933Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T07:37:50.134Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:37:50.134Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:37:50.139Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:37:50.139Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:37:50.162Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:37:50.164Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:37:50.170Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:37:50.170Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:56:38.451Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:38.452Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:56:38.454Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.455Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.455Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:38.456Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:56:38.456Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.457Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.458Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T07:56:38.511Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T07:56:38.759Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:56:38.760Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-04T07:56:38.775Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.776Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.799Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.800Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.801Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.801Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.801Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-04T07:56:38.801Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:56:38.804Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-04T07:56:38.805Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:56:38.807Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-04T07:56:38.807Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:56:38.895Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:56:38.895Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-04T07:56:38.896Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.897Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.910Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.910Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.911Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.911Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:38.911Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-04T07:56:38.912Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:56:38.915Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-04T07:56:38.915Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:56:38.918Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-04T07:56:38.918Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T07:56:39.526Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-04T07:56:39.526Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-04T07:56:39.884Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-04T07:56:39.885Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-04T07:56:39.908Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-04T07:56:39.908Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-04T07:56:39.919Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-04T07:56:39.919Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-04T07:56:39.934Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-04T07:56:39.934Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-04T07:56:39.957Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-04T07:56:39.958Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:56:39.967Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:39.967Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:56:39.967Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:39.967Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:39.967Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T07:56:40.176Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:56:40.176Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:56:40.183Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:40.183Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:56:40.225Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:40.225Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:56:40.225Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:40.225Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:40.225Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:56:40.232Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:40.232Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:56:40.233Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:40.233Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:40.233Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T07:56:40.433Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:56:40.433Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:56:40.436Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:40.436Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:56:40.457Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:56:40.457Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:56:40.464Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:40.464Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:56:45.788Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:45.788Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:56:45.788Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:45.788Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:56:45.797Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:45.797Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:45.797Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:45.797Z] Checked if tokens are valid: true, expires at: 1770194267039
+[debug] [2026-02-04T07:56:45.798Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T07:56:45.809Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T07:56:46.336Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:56:46.336Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:56:46.360Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:46.373Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T07:56:46.402Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T07:56:46.406Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T07:56:46.451Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T07:56:46.451Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T23:34:13.319Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T23:34:13.320Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T23:34:13.322Z] Checked if tokens are valid: false, expires at: 1770194267039
+[debug] [2026-02-04T23:34:13.322Z] Checked if tokens are valid: false, expires at: 1770194267039
+[debug] [2026-02-04T23:34:13.325Z] > refreshing access token with scopes: []
+[debug] [2026-02-04T23:34:13.329Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-04T23:34:13.331Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T23:34:13.450Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T23:34:13.453Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T23:34:13.453Z] Checked if tokens are valid: false, expires at: 1770194267039
+[debug] [2026-02-04T23:34:13.453Z] Checked if tokens are valid: false, expires at: 1770194267039
+[debug] [2026-02-04T23:34:13.454Z] > refreshing access token with scopes: []
+[debug] [2026-02-04T23:34:13.454Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-04T23:34:13.454Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T23:34:13.527Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-04T23:34:13.534Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T23:34:13.556Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T23:34:13.562Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-04T23:34:13.563Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-04T23:34:13.571Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T23:34:13.822Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T23:34:13.822Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-04T23:34:13.837Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:13.838Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:13.873Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:13.873Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:13.874Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:13.874Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:13.874Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-04T23:34:13.874Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T23:34:13.880Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-04T23:34:13.881Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T23:34:13.882Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-04T23:34:13.883Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T23:34:14.674Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T23:34:14.674Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-04T23:34:14.675Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:14.675Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:14.698Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:14.698Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:14.699Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:14.699Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:14.699Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-04T23:34:14.701Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T23:34:14.705Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-04T23:34:14.706Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T23:34:14.710Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-04T23:34:14.710Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-04T23:34:14.952Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-04T23:34:14.952Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-04T23:34:15.030Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-04T23:34:15.034Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-04T23:34:15.065Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-04T23:34:15.066Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-04T23:34:15.741Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-04T23:34:15.741Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-04T23:34:15.762Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-04T23:34:15.763Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-04T23:34:15.851Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-04T23:34:15.851Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T23:34:15.862Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T23:34:15.862Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T23:34:15.862Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:15.862Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:15.862Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T23:34:16.917Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T23:34:16.918Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T23:34:16.920Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T23:34:16.920Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T23:34:16.940Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T23:34:16.940Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T23:34:16.941Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:16.941Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:16.942Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T23:34:16.946Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T23:34:16.946Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T23:34:16.946Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:16.946Z] Checked if tokens are valid: true, expires at: 1770251652563
+[debug] [2026-02-04T23:34:16.946Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-04T23:34:17.980Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T23:34:17.980Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T23:34:17.982Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T23:34:17.982Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-04T23:34:17.986Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-04T23:34:17.986Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-04T23:34:17.993Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-04T23:34:17.994Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T01:50:07.225Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T01:50:07.229Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T01:50:07.232Z] Checked if tokens are valid: false, expires at: 1770251652563
+[debug] [2026-02-06T01:50:07.232Z] Checked if tokens are valid: false, expires at: 1770251652563
+[debug] [2026-02-06T01:50:07.233Z] > refreshing access token with scopes: []
+[debug] [2026-02-06T01:50:07.237Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-06T01:50:07.237Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T01:50:07.455Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T01:50:07.456Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T01:50:07.463Z] Checked if tokens are valid: false, expires at: 1770251652563
+[debug] [2026-02-06T01:50:07.463Z] Checked if tokens are valid: false, expires at: 1770251652563
+[debug] [2026-02-06T01:50:07.463Z] > refreshing access token with scopes: []
+[debug] [2026-02-06T01:50:07.469Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-06T01:50:07.469Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T01:50:07.625Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-06T01:50:07.625Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T01:50:07.658Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T01:50:07.662Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-06T01:50:07.662Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T01:50:07.686Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T01:50:07.956Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T01:50:07.957Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-06T01:50:08.015Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.015Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.113Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.119Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.120Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.120Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.120Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-06T01:50:08.121Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T01:50:08.132Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-06T01:50:08.133Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T01:50:08.140Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-06T01:50:08.140Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T01:50:08.815Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T01:50:08.815Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-06T01:50:08.823Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.823Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.855Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.856Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.856Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.858Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:08.859Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-06T01:50:08.859Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T01:50:08.861Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-06T01:50:08.865Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T01:50:08.871Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-06T01:50:08.873Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T01:50:09.300Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-06T01:50:09.300Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-06T01:50:09.309Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-06T01:50:09.309Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-06T01:50:09.310Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-06T01:50:09.310Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T01:50:09.321Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T01:50:09.321Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T01:50:09.321Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:09.322Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:09.322Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T01:50:09.958Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-06T01:50:09.958Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-06T01:50:09.969Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-06T01:50:09.970Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-06T01:50:09.999Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-06T01:50:10.001Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-06T01:50:10.334Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T01:50:10.334Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T01:50:10.348Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T01:50:10.348Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T01:50:10.423Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T01:50:10.424Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T01:50:10.424Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:10.424Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:10.424Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T01:50:10.434Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T01:50:10.435Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T01:50:10.435Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:10.435Z] Checked if tokens are valid: true, expires at: 1770346206663
+[debug] [2026-02-06T01:50:10.435Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T01:50:10.647Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T01:50:10.648Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T01:50:10.657Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T01:50:10.658Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T01:50:10.672Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T01:50:10.672Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T01:50:10.683Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T01:50:10.684Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T04:14:13.389Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T04:14:13.390Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T04:14:13.392Z] Checked if tokens are valid: false, expires at: 1770346206663
+[debug] [2026-02-06T04:14:13.393Z] Checked if tokens are valid: false, expires at: 1770346206663
+[debug] [2026-02-06T04:14:13.394Z] > refreshing access token with scopes: []
+[debug] [2026-02-06T04:14:13.396Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-06T04:14:13.397Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T04:14:13.458Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T04:14:13.459Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T04:14:13.459Z] Checked if tokens are valid: false, expires at: 1770346206663
+[debug] [2026-02-06T04:14:13.459Z] Checked if tokens are valid: false, expires at: 1770346206663
+[debug] [2026-02-06T04:14:13.459Z] > refreshing access token with scopes: []
+[debug] [2026-02-06T04:14:13.460Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-06T04:14:13.460Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T04:14:13.519Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-06T04:14:13.519Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T04:14:13.546Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T04:14:13.565Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-06T04:14:13.565Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T04:14:13.582Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T04:14:13.788Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T04:14:13.790Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-06T04:14:13.811Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.811Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.834Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.834Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.835Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.835Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.835Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-06T04:14:13.836Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T04:14:13.839Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-06T04:14:13.839Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T04:14:13.842Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-06T04:14:13.842Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T04:14:13.924Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T04:14:13.925Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-06T04:14:13.926Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.926Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.945Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.945Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.946Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.946Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:13.946Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-06T04:14:13.946Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T04:14:13.949Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-06T04:14:13.949Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T04:14:13.952Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-06T04:14:13.953Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T04:14:14.861Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-06T04:14:14.861Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-06T04:14:14.897Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-06T04:14:14.898Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-06T04:14:14.927Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-06T04:14:14.927Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T04:14:14.940Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T04:14:14.940Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T04:14:14.941Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:14.941Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:14.942Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T04:14:14.952Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-06T04:14:14.953Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-06T04:14:14.970Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-06T04:14:14.970Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-06T04:14:15.018Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-06T04:14:15.018Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-06T04:14:15.973Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T04:14:15.973Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T04:14:15.981Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T04:14:15.985Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T04:14:16.023Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T04:14:16.025Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T04:14:16.026Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:16.026Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:16.026Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T04:14:16.033Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T04:14:16.033Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T04:14:16.033Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:16.033Z] Checked if tokens are valid: true, expires at: 1770354852565
+[debug] [2026-02-06T04:14:16.034Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T04:14:16.242Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T04:14:16.242Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T04:14:16.251Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T04:14:16.251Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T04:14:17.053Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T04:14:17.053Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T04:14:17.063Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T04:14:17.064Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T06:30:14.570Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T06:30:14.582Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T06:30:14.595Z] Checked if tokens are valid: false, expires at: 1770354852565
+[debug] [2026-02-06T06:30:14.602Z] Checked if tokens are valid: false, expires at: 1770354852565
+[debug] [2026-02-06T06:30:14.604Z] > refreshing access token with scopes: []
+[debug] [2026-02-06T06:30:14.615Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-06T06:30:14.618Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T06:30:14.809Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T06:30:14.812Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T06:30:14.816Z] Checked if tokens are valid: false, expires at: 1770354852565
+[debug] [2026-02-06T06:30:14.818Z] Checked if tokens are valid: false, expires at: 1770354852565
+[debug] [2026-02-06T06:30:14.819Z] > refreshing access token with scopes: []
+[debug] [2026-02-06T06:30:14.824Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-02-06T06:30:14.825Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T06:30:14.916Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-06T06:30:14.916Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T06:30:14.960Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T06:30:15.026Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-02-06T06:30:15.030Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-02-06T06:30:15.049Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T06:30:16.051Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T06:30:16.052Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-06T06:30:16.076Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.076Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.100Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.100Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.101Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.101Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.101Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-06T06:30:16.101Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T06:30:16.104Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-06T06:30:16.104Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T06:30:16.109Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-06T06:30:16.109Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T06:30:16.224Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T06:30:16.226Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[debug] [2026-02-06T06:30:16.232Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.233Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.266Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.266Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.267Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.267Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:16.268Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-02-06T06:30:16.268Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T06:30:16.275Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-02-06T06:30:16.275Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T06:30:16.279Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [none]
+[debug] [2026-02-06T06:30:16.279Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com  x-goog-user-project=p2ms-core
+[debug] [2026-02-06T06:30:17.184Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-06T06:30:17.185Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-06T06:30:17.234Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-06T06:30:17.235Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-06T06:30:17.247Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-06T06:30:17.247Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T06:30:17.276Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T06:30:17.276Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T06:30:17.277Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:17.277Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:17.280Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T06:30:17.334Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-02-06T06:30:17.334Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-02-06T06:30:17.370Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com 403
+[debug] [2026-02-06T06:30:17.370Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseio.com [omitted]
+[debug] [2026-02-06T06:30:17.408Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-02-06T06:30:17.408Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/p2ms-core/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-02-06T06:30:17.508Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T06:30:17.508Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T06:30:17.525Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T06:30:17.526Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T06:30:17.608Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T06:30:17.609Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T06:30:17.609Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:17.609Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:17.609Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T06:30:17.632Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T06:30:17.632Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T06:30:17.633Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:17.633Z] Checked if tokens are valid: true, expires at: 1770363014030
+[debug] [2026-02-06T06:30:17.633Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo [none]
+[debug] [2026-02-06T06:30:17.850Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T06:30:17.850Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T06:30:17.861Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T06:30:17.872Z] > authorizing via signed-in user (vcempireo@gmail.com)
+[debug] [2026-02-06T06:30:18.623Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo 200
+[debug] [2026-02-06T06:30:18.628Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/p2ms-core/billingInfo {"name":"projects/p2ms-core/billingInfo","projectId":"p2ms-core","billingAccountName":"billingAccounts/01ED28-B4DBB4-BE40D8","billingEnabled":true}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2026-02-06T06:30:18.647Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2026-02-06T06:30:18.648Z] > authorizing via signed-in user (vcempireo@gmail.com)

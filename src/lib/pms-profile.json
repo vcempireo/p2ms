@@ -1,0 +1,137 @@
+{
+  "daily_logs": [
+    {
+      "date": "2025-06-19",
+      "health_metrics": { "weight_kg": 84.0, "body_fat_percent": 21.0 }
+    },
+    {
+      "date": "2025-07-15",
+      "health_metrics": { "weight_kg": 83.1, "body_fat_percent": 20.5 }
+    },
+    {
+      "date": "2025-08-22",
+      "health_metrics": { "weight_kg": 82.5, "body_fat_percent": 20.1 }
+    },
+    {
+      "date": "2025-09-18",
+      "health_metrics": { "weight_kg": 82.0, "body_fat_percent": 19.5 }
+    },
+    {
+      "date": "2025-10-20",
+      "health_metrics": { "weight_kg": 81.2, "body_fat_percent": 18.8 }
+    },
+    {
+      "date": "2025-11-17",
+      "workout_performed": [
+        {
+          "exercise_id": "e001",
+          "sets": [{ "reps": 10, "weight": 80 }, { "reps": 9, "weight": 80 }, { "reps": 8, "weight": 80 }],
+          "effective_reps": 8
+        },
+        {
+          "exercise_id": "e002",
+          "sets": [{ "reps": 12, "weight": 20 }, { "reps": 11, "weight": 20 }],
+          "effective_reps": 11
+        },
+        {
+          "exercise_id": "e003",
+          "sets": [{ "reps": 15, "weight": 15 }, { "reps": 14, "weight": 15 }],
+          "effective_reps": 14
+        }
+      ]
+    },
+    {
+      "date": "2025-11-18",
+      "workout_performed": [
+        {
+          "exercise_id": "e007",
+          "sets": [{ "reps": 8, "weight": 120 }, { "reps": 7, "weight": 120 }],
+          "effective_reps": 7
+        },
+        {
+          "exercise_id": "e008",
+          "sets": [{ "reps": 10, "weight": 0 }, { "reps": 8, "weight": 0 }],
+          "effective_reps": 8
+        },
+        {
+          "exercise_id": "e009",
+          "sets": [{ "reps": 10, "weight": 60 }],
+          "effective_reps": 10
+        }
+      ]
+    },
+    {
+      "date": "2025-11-19",
+      "health_metrics": { "weight_kg": 80.5, "body_fat_percent": 18.2 },
+      "food_intake": []
+    },
+    {
+      "date": "2025-11-20",
+      "workout_performed": [
+        {
+          "exercise_id": "e004",
+          "sets": [{ "reps": 10, "weight": 100 }, { "reps": 9, "weight": 100 }],
+          "effective_reps": 9
+        },
+        {
+          "exercise_id": "e005",
+          "sets": [{ "reps": 12, "weight": 150 }],
+          "effective_reps": 12
+        },
+        {
+          "exercise_id": "e006",
+          "sets": [{ "reps": 15, "weight": 40 }],
+          "effective_reps": 15
+        }
+      ]
+    }
+  ],
+  "system_settings": {
+    "user_profile": {
+      "name": "田中 優",
+      "avatar_url": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    "app_constants": {
+      "target_weight_kg": 75,
+      "target_body_fat_percent": 15
+    }
+  },
+  "workout_library": [
+    {
+      "workout_id": "w001",
+      "workout_name": "胸のトレーニング",
+      "exercises": [
+        { "exercise_id": "e001", "exercise_name": "ベンチプレス" },
+        { "exercise_id": "e002", "exercise_name": "インクラインダンベルプレス" },
+        { "exercise_id": "e003", "exercise_name": "ケーブルクロスオーバー" }
+      ]
+    },
+    {
+      "workout_id": "w002",
+      "workout_name": "脚のトレーニング",
+      "exercises": [
+        { "exercise_id": "e004", "exercise_name": "スクワット" },
+        { "exercise_id": "e005", "exercise_name": "レッグプレス" },
+        { "exercise_id": "e006", "exercise_name": "レッグエクステンション" }
+      ]
+    },
+    {
+      "workout_id": "w003",
+      "workout_name": "背中のトレーニング",
+      "exercises": [
+        { "exercise_id": "e007", "exercise_name": "デッドリフト" },
+        { "exercise_id": "e008", "exercise_name": "懸垂（チンニング）" },
+        { "exercise_id": "e009", "exercise_name": "ベントオーバーロウ" }
+      ]
+    }
+  ],
+  "workout_schedule": {
+    "0": "rest",
+    "1": "w001", 
+    "2": "w003", 
+    "3": "w002", 
+    "4": "w001", 
+    "5": "w003", 
+    "6": "rest"
+  }
+}

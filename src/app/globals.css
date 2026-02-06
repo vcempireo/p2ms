@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-pms-bg-dark text-pms-text-primary;
+  }
+}
+
+/* Custom input styles for the dark theme */
+.input-base {
+    @apply bg-pms-bg-dark border border-pms-border rounded-md px-3 py-2 w-full text-pms-text-primary placeholder-pms-text-secondary transition-colors focus:border-pms-accent-cyan focus:ring-0;
+}
