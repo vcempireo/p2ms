@@ -12,6 +12,12 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'P²MS',
   description: 'Personalized Performance Management System',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'P²MS',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
