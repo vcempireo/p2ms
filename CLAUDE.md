@@ -5,6 +5,11 @@
 - Firebase Project ID: p2ms-core
 - 本番ホスティング: Vercel予定
 
+### 思想（重要）
+既存アプリはユーザーがDBに合わせる設計。P²MSは**AIがユーザーの人生に合わせて成長する**逆転の発想。
+将来的にはSoul Architecture（生年月日から生成するユーザー固有の内的OS）をMCSP（Memory Core Sync Protocol）でAI呼び出し時に注入し、究極のパーソナライズを実現する。
+発案者自身が3年間の自己実験で16kg減・体脂肪11%台・花粉症消滅を達成した実証済みシステム。
+
 ## 技術スタック
 - Next.js 14 (App Router) + TypeScript
 - Tailwind CSS（モバイルファースト）
