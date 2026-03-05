@@ -88,7 +88,7 @@ const WorkoutConsole = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedExercise, setSelectedExercise] = useState<{id: string, name: string} | null>(null);
 
-    const todaysWorkoutId = dummyProfile.workout_schedule[dayOfWeek as keyof typeof dummyProfile.workout_schedule];
+    const todaysWorkoutId = dummyProfile.workout_schedule[String(dayOfWeek) as keyof typeof dummyProfile.workout_schedule];
 
     const workoutPlan = useMemo(() => {
         return dummyProfile.workout_library.find(w => w.workout_id === todaysWorkoutId);
@@ -105,8 +105,8 @@ const WorkoutConsole = () => {
                 log.workout_performed && log.workout_performed.some(ex => ex.exercise_id === exercise.exercise_id)
             );
 
-            if (relevantLog) {
-                const lastWorkoutForExercise = relevantLog.workout_performed.find(ex => ex.exercise_id === exercise.exercise_id);
+            if (relevantLog && relevantLog.workout_performed) {
+                const lastWorkoutForExercise = relevantLog.workout_performed.find((ex: any) => ex.exercise_id === exercise.exercise_id);
                 if (lastWorkoutForExercise) {
                     logMap.set(exercise.exercise_id, `${lastWorkoutForExercise.effective_reps} 回`);
                 }

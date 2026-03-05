@@ -1,89 +1,57 @@
 'use client';
 
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config.js';
-
-// Resolve the full Tailwind config
-const fullConfig = resolveConfig(tailwindConfig);
-
-// Type guard to check for colors
-function isColorObject(colors: any): colors is { [key: string]: string | { [key: string]: string } } {
-    return typeof colors === 'object' && colors !== null;
-}
-
-// Safely access nested color values
-const getThemeColor = (path: string): string => {
-    if (!fullConfig.theme?.colors || !isColorObject(fullConfig.theme.colors)) {
-        return '#000'; // Fallback color
-    }
-    const keys = path.split('.');
-    let current: any = fullConfig.theme.colors;
-    for (const key of keys) {
-        if (typeof current === 'object' && current !== null && key in current) {
-            current = current[key];
-        } else {
-            return '#000'; // Fallback if path is invalid
-        }
-    }
-    return typeof current === 'string' ? current : '#000';
-};
-
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface WeightData {
   month: string;
   weight: number;
 }
 
-interface WeightHistoryProps {
-  data: WeightData[];
-}
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="bg-ios-label/90 backdrop-blur-sm text-white text-xs px-3 py-2 rounded-xl">
+      <p className="font-semibold">{payload[0].value} kg</p>
+      <p className="text-white/70">{label}</p>
+    </div>
+  );
+};
 
-const WeightHistory = ({ data }: WeightHistoryProps) => {
-
-  const colors = {
-    textSecondary: getThemeColor('pms-text-secondary'),
-    accentPink: getThemeColor('pms-accent-pink'),
-    bgDark: getThemeColor('pms-bg-dark'),
-    border: getThemeColor('pms-border'),
-    textPrimary: getThemeColor('pms-text-primary'),
-  };
-
+const WeightHistory = ({ data }: { data: WeightData[] }) => {
   if (!data || data.length === 0) {
     return (
-        <div className="bg-pms-bg-light p-6 rounded-2xl shadow-glow-pink">
-            <h3 className="text-lg font-semibold text-pms-text-primary mb-4">体重履歴</h3>
-            <div className="text-center text-pms-text-secondary py-8">
-                データがありません
-            </div>
-        </div>
+      <div className="h-full flex items-center justify-center">
+        <p className="text-ios-tertiary text-sm">データなし</p>
+      </div>
     );
   }
 
   return (
-    <div className="bg-pms-bg-light p-6 rounded-2xl shadow-glow-pink">
-      <h3 className="text-lg font-semibold text-pms-text-primary mb-4">体重履歴 (過去6ヶ月)</h3>
-      <div style={{ width: '100%', height: 200 }}>
-        <ResponsiveContainer>
-          <LineChart data={data} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.1)" />
-            <XAxis dataKey="month" tick={{ fill: colors.textSecondary }} tickLine={false} axisLine={false} />
-            <YAxis tick={{ fill: colors.textSecondary }} tickLine={false} axisLine={false} domain={['dataMin - 2', 'dataMax + 2']} />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: colors.bgDark,
-                borderColor: colors.border,
-                borderRadius: '0.75rem',
-                color: colors.textPrimary,
-              }} 
-              labelStyle={{ fontWeight: 'bold' }}
-              itemStyle={{ color: colors.accentPink }}
-            />
-            <Line type="monotone" dataKey="weight" stroke={colors.accentPink} strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 8 }} />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
+    <ResponsiveContainer width="100%" height="100%">
+      <LineChart data={data} margin={{ top: 4, right: 4, left: -32, bottom: 0 }}>
+        <XAxis
+          dataKey="month"
+          tick={{ fill: '#8E8E93', fontSize: 10 }}
+          tickLine={false}
+          axisLine={false}
+        />
+        <YAxis
+          tick={{ fill: '#8E8E93', fontSize: 10 }}
+          tickLine={false}
+          axisLine={false}
+          domain={['dataMin - 1', 'dataMax + 1']}
+        />
+        <Tooltip content={<CustomTooltip />} />
+        <Line
+          type="monotone"
+          dataKey="weight"
+          stroke="#007AFF"
+          strokeWidth={2}
+          dot={false}
+          activeDot={{ r: 5, fill: '#007AFF', strokeWidth: 0 }}
+        />
+      </LineChart>
+    </ResponsiveContainer>
   );
 };
 

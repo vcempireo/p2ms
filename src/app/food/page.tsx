@@ -1,182 +1,218 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, parseISO } from 'date-fns';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from 'date-fns';
 import { ja } from 'date-fns/locale';
-import { collection, query, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { useAuth } from '@/components/AuthProvider';
+import { MealSummary, AIProvider } from '@/lib/types';
 import Link from 'next/link';
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 
-// === コンポーネント: 詳細表示用の食事カード ===
-const MealDetailCard = ({ meal }: { meal: any }) => (
-  <div className="flex gap-4 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-4">
-    {/* 左: 画像 (大きく表示) */}
-    <div className="w-1/3 min-w-[100px] aspect-square rounded-xl overflow-hidden relative">
-      {meal.imageUrl ? (
-        <img src={meal.imageUrl} alt={meal.type} className="w-full h-full object-cover" />
-      ) : (
-        <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-300">No Image</div>
-      )}
-      <span className="absolute top-2 left-2 bg-black/50 text-white text-[10px] px-2 py-1 rounded-full backdrop-blur-sm">
-        {meal.time}
-      </span>
-    </div>
+const AI_DISPLAY: Record<AIProvider, string> = {
+  openai: 'GPT',
+  gemini: 'Gemini',
+  anthropic: 'Claude',
+};
 
-    {/* 右: スペック & AI */}
-    <div className="flex-1 space-y-2">
-      <div className="flex justify-between items-start">
-        <h4 className="font-bold text-gray-800 text-lg">{meal.type}</h4>
-        <span className="font-mono text-gray-500 text-sm">{meal.nutrition.calories} kcal</span>
-      </div>
-      
-      <p className="text-sm text-gray-600 line-clamp-1 font-medium">{meal.menus.join(' / ')}</p>
-      
-      {/* AIコメント風表示 */}
-      <div className="bg-blue-50 p-3 rounded-lg rounded-tl-none text-sm text-gray-700 leading-snug relative mt-2">
-        <span className="text-xs font-bold text-blue-600 block mb-1">🤖 AI Feedback</span>
-        {meal.ai_analysis}
-      </div>
-    </div>
-  </div>
-);
+const WEEK_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
 
 export default function FoodPage() {
-  const [currentMonth, setCurrentMonth] = useState(new Date(2026, 1, 1)); // 2026年2月スタート
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null); // 選択中の日付
-  const [logs, setLogs] = useState<Record<string, any>>({}); // 日付をキーにしたログデータ
+  const { user } = useAuth();
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [mealsByDate, setMealsByDate] = useState<Record<string, MealSummary[]>>({});
   const [loading, setLoading] = useState(true);
 
-  // カレンダー生成用
   const calendarDays = eachDayOfInterval({
     start: startOfMonth(currentMonth),
     end: endOfMonth(currentMonth),
   });
 
-  // データ取得
   useEffect(() => {
-    const fetchLogs = async () => {
-      const q = query(collection(db, "daily_logs"), orderBy("date", "desc"));
-      const snapshot = await getDocs(q);
-      const logMap: Record<string, any> = {};
-      
-      snapshot.docs.forEach(doc => {
-        const data = doc.data();
-        logMap[data.date] = data;
+    if (!user) return;
+    const fetchMonth = async () => {
+      setLoading(true);
+      const q = query(
+        collection(db, 'users', user.uid, 'meal_summary'),
+        where('mealTime', '>=', Timestamp.fromDate(startOfMonth(currentMonth))),
+        where('mealTime', '<=', Timestamp.fromDate(endOfMonth(currentMonth))),
+        orderBy('mealTime', 'asc')
+      );
+      const snap = await getDocs(q);
+      const byDate: Record<string, MealSummary[]> = {};
+      snap.docs.forEach((d) => {
+        const data = { id: d.id, ...d.data() } as MealSummary;
+        const key = format((data.mealTime as Timestamp).toDate(), 'yyyy-MM-dd');
+        if (!byDate[key]) byDate[key] = [];
+        byDate[key].push(data);
       });
-      setLogs(logMap);
-      
-      // データがある最新の日を選択状態にする
-      if (snapshot.docs.length > 0 && !selectedDate) {
-        setSelectedDate(parseISO(snapshot.docs[0].data().date));
-      }
+      setMealsByDate(byDate);
       setLoading(false);
     };
-    fetchLogs();
-  }, []);
+    fetchMonth();
+  }, [user, currentMonth]);
 
-  // 月変更
-  const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
-  const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
-
-  // 選択された日のデータ
-  const selectedLog = selectedDate ? logs[format(selectedDate, 'yyyy-MM-dd')] : null;
+  const selectedKey   = selectedDate ? format(selectedDate, 'yyyy-MM-dd') : null;
+  const selectedMeals = selectedKey ? (mealsByDate[selectedKey] ?? []) : [];
+  const selectedTotal = selectedMeals.reduce((s, m) => s + m.totalCalories, 0);
 
   return (
-    <div className="min-h-screen bg-[#F9FAFB] pb-20">
-      {/* === ヘッダー === */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="text-sm text-gray-500 hover:text-gray-900">
-          ← Dashboard
-        </Link>
-        <h1 className="text-lg font-bold">Food Journal</h1>
-        <div className="w-16"></div> {/* レイアウト調整用 */}
+    <div className="min-h-screen bg-ios-bg page-content">
+
+      {/* ─── ヘッダー ─── */}
+      <header className="sticky top-0 z-10 bg-ios-bg/80 backdrop-blur-xl border-b border-black/[0.06]">
+        <div className="max-w-md mx-auto flex items-center justify-between h-14 px-5">
+          <h1 className="text-base font-semibold text-ios-label">食事ジャーナル</h1>
+          <Link href="/food/new" className="flex items-center gap-1 text-ios-blue text-sm font-medium">
+            <Plus className="w-4 h-4" />記録
+          </Link>
+        </div>
       </header>
 
-      <main className="max-w-md mx-auto p-4">
-        
-        {/* === 月切り替え & サマリー === */}
-        <div className="flex justify-between items-center mb-6">
-          <button onClick={prevMonth} className="p-2 hover:bg-gray-100 rounded-full">◀</button>
+      <div className="max-w-md mx-auto px-4 pt-4 space-y-4">
+
+        {/* ─── 月切り替え ─── */}
+        <div className="flex items-center justify-between px-1">
+          <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-gray-100">
+            <ChevronLeft className="w-5 h-5 text-ios-blue" />
+          </button>
           <div className="text-center">
-            <h2 className="text-xl font-bold text-gray-800">{format(currentMonth, 'yyyy年 M月')}</h2>
-            <p className="text-xs text-gray-400">Total Entries: {Object.keys(logs).filter(k => k.startsWith(format(currentMonth, 'yyyy-MM'))).length}</p>
+            <p className="text-base font-semibold text-ios-label">
+              {format(currentMonth, 'yyyy年 M月')}
+            </p>
+            <p className="text-xs text-ios-secondary mt-0.5">
+              {Object.keys(mealsByDate).length}日分の記録
+            </p>
           </div>
-          <button onClick={nextMonth} className="p-2 hover:bg-gray-100 rounded-full">▶</button>
+          <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-gray-100">
+            <ChevronRight className="w-5 h-5 text-ios-blue" />
+          </button>
         </div>
 
-        {/* === カレンダー・ギャラリー (ここがメイン！) === */}
-        <div className="grid grid-cols-7 gap-1 mb-8">
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
-            <div key={d} className="text-center text-xs text-gray-400 py-1 font-bold">{d}</div>
-          ))}
-          
-          {calendarDays.map((day) => {
-            const dateKey = format(day, 'yyyy-MM-dd');
-            const log = logs[dateKey];
-            const isSelected = selectedDate && isSameDay(day, selectedDate);
-            
-            // サムネイル画像（昼食、なければ夕食、なければ朝食）
-            const thumbUrl = log?.nutrition?.meals?.find((m:any) => m.type === '昼食')?.imageUrl 
-                          || log?.nutrition?.meals?.[0]?.imageUrl;
-
-            return (
-              <button
-                key={dateKey}
-                onClick={() => setSelectedDate(day)}
-                className={`aspect-square relative rounded-lg overflow-hidden transition-all duration-200 border-2 
-                  ${isSelected ? 'border-blue-500 ring-2 ring-blue-200 scale-105 z-10 shadow-lg' : 'border-transparent hover:opacity-80'}`}
-              >
-                {/* 背景: 画像がある場合 */}
-                {thumbUrl ? (
-                  <img src={thumbUrl} alt="meal" className="w-full h-full object-cover" />
-                ) : (
-                  <div className={`w-full h-full ${log ? 'bg-green-100' : 'bg-gray-50'}`}></div>
-                )}
-
-                {/* 日付オーバーレイ */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span className={`text-sm font-bold ${thumbUrl ? 'text-white drop-shadow-md' : 'text-gray-400'}`}>
-                    {format(day, 'd')}
-                  </span>
-                  {log && !thumbUrl && (
-                    <span className="text-[8px] text-green-600 font-bold">●</span>
-                  )}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* === 選択された日の詳細フィード === */}
-        {selectedDate && (
-          <div className="animate-fade-in-up">
-            <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <span className="bg-black text-white px-2 py-1 rounded text-sm">
-                {format(selectedDate, 'M/d (E)', { locale: ja })}
-              </span>
-              <span className="text-sm font-normal text-gray-500 ml-auto">
-                Total: {selectedLog?.nutrition?.total_intake_kcal || 0} kcal
-              </span>
-            </h3>
-
-            {selectedLog?.nutrition?.meals ? (
-              <div className="space-y-2">
-                {selectedLog.nutrition.meals.map((meal: any, idx: number) => (
-                  <MealDetailCard key={idx} meal={meal} />
-                ))}
+        {/* ─── カレンダー ─── */}
+        <div className="bg-ios-card rounded-2xl shadow-ios-sm overflow-hidden p-3">
+          {/* 曜日ヘッダー */}
+          <div className="grid grid-cols-7 mb-1">
+            {WEEK_LABELS.map((d, i) => (
+              <div key={d} className={`text-center text-[11px] font-semibold py-1 ${i === 0 ? 'text-ios-red' : i === 6 ? 'text-ios-blue' : 'text-ios-secondary'}`}>
+                {d}
               </div>
+            ))}
+          </div>
+
+          {/* 日付グリッド */}
+          <div className="grid grid-cols-7 gap-0.5">
+            {calendarDays.map((day) => {
+              const key       = format(day, 'yyyy-MM-dd');
+              const hasMeals  = !!mealsByDate[key]?.length;
+              const isSelected= selectedDate && isSameDay(day, selectedDate);
+              const thumb     = mealsByDate[key]?.[0]?.imageUrl;
+              const dow       = day.getDay();
+
+              return (
+                <button
+                  key={key}
+                  onClick={() => setSelectedDate(day)}
+                  className={`aspect-square relative rounded-xl overflow-hidden transition-all active:scale-95
+                    ${isSelected ? 'ring-2 ring-ios-blue ring-offset-1 scale-[1.04] z-10' : ''}`}
+                >
+                  {thumb ? (
+                    <img src={thumb} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className={`w-full h-full ${hasMeals ? 'bg-blue-50' : 'bg-gray-50'}`} />
+                  )}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className={`text-sm font-semibold drop-shadow-sm
+                      ${thumb ? 'text-white' : hasMeals ? 'text-ios-blue' : dow === 0 ? 'text-ios-red' : dow === 6 ? 'text-ios-blue' : 'text-ios-secondary'}`}
+                    >
+                      {format(day, 'd')}
+                    </span>
+                    {hasMeals && !thumb && (
+                      <div className="w-1 h-1 bg-ios-blue rounded-full mt-0.5" />
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ─── 選択日の詳細 ─── */}
+        {selectedDate && (
+          <div className="space-y-3">
+            {/* 日付ヘッダー */}
+            <div className="flex items-center justify-between px-1">
+              <h3 className="text-base font-semibold text-ios-label">
+                {format(selectedDate, 'M月d日（E）', { locale: ja })}
+              </h3>
+              {selectedMeals.length > 0 && (
+                <span className="text-sm font-medium text-ios-secondary">
+                  {Math.round(selectedTotal).toLocaleString()} kcal
+                </span>
+              )}
+            </div>
+
+            {selectedMeals.length > 0 ? (
+              selectedMeals.map((meal) => (
+                <MealCard key={meal.id} meal={meal} />
+              ))
             ) : (
-              <div className="p-8 text-center bg-white rounded-2xl border border-dashed border-gray-300">
-                <p className="text-gray-400">No records for this day.</p>
-                <Link href="/upload" className="mt-2 inline-block text-blue-600 font-bold text-sm">
-                  + データを追加する
+              <div className="bg-ios-card rounded-2xl shadow-ios-sm p-8 text-center">
+                <p className="text-ios-secondary text-sm">この日の記録はありません</p>
+                <Link href="/food/new" className="mt-3 inline-flex items-center gap-1.5 text-ios-blue text-sm font-semibold">
+                  <Plus className="w-4 h-4" />食事を記録する
                 </Link>
               </div>
             )}
           </div>
         )}
 
-      </main>
+      </div>
+    </div>
+  );
+}
+
+// ─── 食事カード ─────────────────────────────────────────────────
+function MealCard({ meal }: { meal: MealSummary }) {
+  return (
+    <div className="bg-ios-card rounded-2xl shadow-ios-sm overflow-hidden">
+      <div className="flex gap-3 p-4">
+        {/* サムネイル */}
+        <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
+          {meal.imageUrl
+            ? <img src={meal.imageUrl} alt="" className="w-full h-full object-cover" />
+            : <div className="w-full h-full flex items-center justify-center text-2xl">🍽️</div>
+          }
+        </div>
+
+        {/* 内容 */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-2">
+            <span className="text-xs font-semibold text-ios-blue">{meal.mealType}</span>
+            <span className="text-sm font-semibold text-ios-label flex-shrink-0">
+              {Math.round(meal.totalCalories)} kcal
+            </span>
+          </div>
+          <p className="text-sm text-ios-label font-medium mt-1 leading-snug line-clamp-2">
+            {meal.menus.join(' · ')}
+          </p>
+          {/* PFCミニバー */}
+          <div className="flex gap-2 mt-2 text-[11px] text-ios-secondary">
+            <span>P {meal.totalProtein.toFixed(0)}g</span>
+            <span>F {meal.totalFat.toFixed(0)}g</span>
+            <span>C {meal.totalCarbs.toFixed(0)}g</span>
+          </div>
+        </div>
+      </div>
+
+      {/* AIバッジ */}
+      <div className="px-4 pb-3">
+        <span className="text-[10px] font-medium bg-blue-50 text-ios-blue px-2 py-0.5 rounded-full">
+          🤖 {AI_DISPLAY[meal.aiProvider] ?? meal.aiProvider} {meal.aiModel}
+        </span>
+      </div>
     </div>
   );
 }

@@ -19,7 +19,7 @@ const StatCard: React.FC<StatCardProps> = ({ label, value, unit, change, changeC
 );
 
 const MyPage = () => {
-  const { profile, game_status } = profileData;
+  const { system_settings } = profileData;
   const bmi = 22.3; // Placeholder
   const bodyFatPercentage = 17.5; // Placeholder
   const leanBodyMass = 50.5; // Placeholder

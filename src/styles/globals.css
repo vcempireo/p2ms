@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F2F2F7;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* iOS風のヘアライン（0.5px）ボーダー */
+.ios-separator {
+  border-color: rgba(60, 60, 67, 0.29);
+  border-width: 0.5px;
+}
+
+/* ボトムナビの安全領域対応 */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+/* ページコンテンツのボトムナビ分の余白 */
+.page-content {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+}
