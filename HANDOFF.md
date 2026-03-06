@@ -6,7 +6,18 @@
 
 ## PC1（HEALTHY-PC）→ PC2（heal.local）へ
 
-- [ ] 特になし
+- [ ] **画像転送の軽量化アイデア（相談）**
+  現在: クライアント側でbase64化 → JSONに乗せてAPIへ送信（元サイズ+33%、タイムアウトリスク大）
+
+  **推奨案: Firebase Storage経由**
+  1. クライアントで圧縮（1024px/0.85品質、現状維持）
+  2. `uploadBytes()` で `/food_images/{uid}/{timestamp}.jpg` に直アップ
+  3. `getDownloadURL()` でURLを取得
+  4. `/api/food/analyze` にはURLだけ送る（JSONが数十バイトになる）
+  5. APIサーバー側でURLからfetchして画像バイナリをAIに渡す
+
+  メリット: APIペイロード激減・タイムアウト解消・画像がStorageに永続保存される
+  PC2側で `/api/food/analyze` のリクエスト形式変更が必要 → `{ storageUrl: string }` or `{ base64Image: string }` 両対応でもOK
 
 ---
 
