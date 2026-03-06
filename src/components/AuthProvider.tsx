@@ -26,8 +26,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     let unsubscribe: (() => void) | undefined;
     let cancelled = false;
 
-    getRedirectResult(auth)
-      .catch(() => {})
+    // getRedirectResultが応答しない場合に備えて3秒でタイムアウト
+    const timeout = new Promise<null>(resolve => setTimeout(() => resolve(null), 3000));
+    Promise.race([getRedirectResult(auth).catch(() => null), timeout])
       .finally(() => {
         if (cancelled) return;
         unsubscribe = onAuthStateChanged(auth, (currentUser) => {
