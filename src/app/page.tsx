@@ -111,11 +111,25 @@ export default function Home() {
         {/* ─── スタッツ行 ─── */}
         <div className="grid grid-cols-2 gap-3">
           <StatCard
-            label="睡眠スコア"
-            value={latestLog?.sleep?.score ?? '--'}
+            label="BMI"
+            value={latestLog?.health_metrics?.bmi ?? '--'}
             unit=""
-            color="bg-ios-purple"
-            emoji="💤"
+            color="bg-ios-blue"
+            emoji="📊"
+          />
+          <StatCard
+            label="体脂肪率"
+            value={latestLog?.health_metrics?.body_fat_percentage ?? '--'}
+            unit="%"
+            color="bg-ios-orange"
+            emoji="🔥"
+          />
+          <StatCard
+            label="除脂肪体重"
+            value={latestLog?.health_metrics?.lean_body_mass ?? '--'}
+            unit="kg"
+            color="bg-ios-green"
+            emoji="💪"
           />
           <StatCard
             label="歩数"
@@ -123,7 +137,7 @@ export default function Home() {
               ? latestLog.health_metrics.steps.toLocaleString()
               : '--'}
             unit="歩"
-            color="bg-ios-green"
+            color="bg-ios-purple"
             emoji="🚶"
           />
         </div>
