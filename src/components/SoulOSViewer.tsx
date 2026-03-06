@@ -32,6 +32,22 @@ interface Props {
 
 export default function SoulOSViewer({ content }: Props) {
   const sections = parseSections(content);
+  const hasAnySections = SECTIONS.some(({ key }) => sections[key]);
+
+  // セクション解析できない場合はそのままMarkdown表示
+  if (!hasAnySections) {
+    return (
+      <div className="prose prose-sm max-w-none
+        text-ios-secondary
+        prose-headings:text-ios-label prose-headings:font-semibold prose-headings:text-sm prose-headings:mt-3 prose-headings:mb-1
+        prose-p:leading-relaxed prose-p:my-1.5
+        prose-strong:text-ios-label
+        prose-ul:my-1 prose-li:my-0.5
+        prose-li:marker:text-ios-blue">
+        <ReactMarkdown>{content}</ReactMarkdown>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-3">
