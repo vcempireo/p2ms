@@ -28,6 +28,7 @@ const MyPage = () => {
   const { user } = useAuth();
   const [soulContent, setSoulContent] = useState<string | null>(null);
   const [soulLoading, setSoulLoading] = useState(true);
+  const [soulError, setSoulError] = useState<string | null>(null);
   const [profile, setProfile] = useState<UserProfile>({});
 
   useEffect(() => {
@@ -40,10 +41,11 @@ const MyPage = () => {
 
         // Soul OS取得
         const soulRes = await fetch('/api/soul/profile', { headers });
-        if (soulRes.ok) {
-          const soulData = await soulRes.json();
+        const soulData = await soulRes.json();
+        if (!soulRes.ok) {
+          setSoulError(`API Error ${soulRes.status}: ${soulData.error}`);
+        } else {
           setSoulContent(soulData.profile?.content ?? null);
-          // Soul生成時の入力データをプロフィールに反映
           if (soulData.profile) {
             setProfile(prev => ({
               ...prev,
@@ -53,7 +55,8 @@ const MyPage = () => {
             }));
           }
         }
-      } catch {
+      } catch (e: any) {
+        setSoulError(e.message ?? '不明なエラー');
         setSoulContent(null);
       } finally {
         setSoulLoading(false);
@@ -117,6 +120,8 @@ const MyPage = () => {
               <div className="flex items-center justify-center py-8">
                 <div className="w-6 h-6 border-ios-blue border-t-transparent rounded-full animate-spin" style={{ borderWidth: 3 }} />
               </div>
+            ) : soulError ? (
+              <p className="text-ios-red text-xs p-2">{soulError}</p>
             ) : soulContent ? (
               <SoulOSViewer content={soulContent} />
             ) : (
