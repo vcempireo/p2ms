@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, CalendarDays, Plus, User } from 'lucide-react';
+import { Home, CalendarDays, Camera, User } from 'lucide-react';
 
 const tabs = [
   { href: '/',        icon: Home,        label: 'ホーム' },
@@ -33,7 +33,7 @@ export default function BottomNav() {
             href="/food/new"
             className="flex items-center justify-center w-14 h-14 bg-ios-blue rounded-full shadow-ios-fab -mt-6 transition-transform active:scale-95"
           >
-            <Plus className="w-7 h-7 text-white" strokeWidth={2.5} />
+            <Camera className="w-7 h-7 text-white" strokeWidth={2} />
           </Link>
 
           {/* 右1タブ（現状は2つだが将来的に追加可能） */}
