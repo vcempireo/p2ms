@@ -3,10 +3,11 @@
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
-import { AnalyzedFoodItem, AnalyzeResponse, getMealType } from '@/lib/types';
+import { AnalyzedFoodItem, AnalyzeResponse, MealType, getMealType } from '@/lib/types';
 import { Camera, Images, X, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@/lib/firebase';
+import { useFoodAnalysis } from './FoodAnalysisContext';
 
 const AI_DISPLAY: Record<string, string> = {
   openai: 'GPT',
@@ -28,8 +29,9 @@ export default function FoodAnalysisWizard() {
   const [analysisResult, setAnalysisResult] = useState<AnalyzeResponse | null>(null);
   const [items, setItems] = useState<AnalyzedFoodItem[]>([]);
   const [mealType, setMealType] = useState(getMealType(new Date()));
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analyzeError, setAnalyzeError] = useState<string | null>(null);
+  const { state: analysisState, startAnalysis, setDone, setError: setGlobalError, reset } = useFoodAnalysis();
+  const isAnalyzing = analysisState.phase === 'analyzing';
+  const analyzeError = analysisState.phase === 'error' ? analysisState.message : null;
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
@@ -40,19 +42,16 @@ export default function FoodAnalysisWizard() {
     return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` };
   };
 
-  // バックグラウンドで解析を実行
-  const runAnalysis = async (blob: Blob) => {
+  // バックグラウンドで解析を実行（ページを離れても継続）
+  const runAnalysis = async (blob: Blob, preview: string, meal: MealType) => {
     if (!user) return;
-    setIsAnalyzing(true);
-    setAnalyzeError(null);
+    startAnalysis(preview, meal);
     try {
-      // Firebase Storageに直接アップロード
       const storageRef = ref(storage, `users/${user.uid}/meals/${Date.now()}.jpg`);
       const snapshot = await uploadBytes(storageRef, blob);
       const url = await getDownloadURL(snapshot.ref);
       setImageUrl(url);
 
-      // URLだけAPIに送る
       const res = await fetch('/api/food/analyze', {
         method: 'POST',
         headers: await getAuthHeader(),
@@ -60,19 +59,18 @@ export default function FoodAnalysisWizard() {
       });
       if (!res.ok) throw new Error((await res.json()).error ?? '解析に失敗しました');
       const result: AnalyzeResponse = await res.json();
+      setDone(url, result, result.items);
       setAnalysisResult(result);
       setItems(result.items);
-      // 解析完了 → レビュー画面へ自動遷移
       setStep('review');
     } catch (e: any) {
       const msg = e.message ?? '解析に失敗しました';
-      setAnalyzeError(
+      setGlobalError(
         msg.includes('504') || msg.includes('timeout') || msg.includes('fetch')
           ? '解析がタイムアウトしました'
-          : msg
+          : msg,
+        blob
       );
-    } finally {
-      setIsAnalyzing(false);
     }
   };
 
@@ -80,7 +78,7 @@ export default function FoodAnalysisWizard() {
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setAnalyzeError(null);
+    reset();
     setAnalysisResult(null);
     setItems([]);
     const reader = new FileReader();
@@ -93,12 +91,12 @@ export default function FoodAnalysisWizard() {
         canvas.width  = img.width  * scale;
         canvas.height = img.height * scale;
         canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
-        setPreviewUrl(canvas.toDataURL('image/jpeg', 0.85));
+        const preview = canvas.toDataURL('image/jpeg', 0.85);
+        setPreviewUrl(preview);
         canvas.toBlob((blob) => {
           if (!blob) return;
           setImageBlob(blob);
-          // 写真取得と同時にバックグラウンド解析を開始
-          runAnalysis(blob);
+          runAnalysis(blob, preview, mealType);
         }, 'image/jpeg', 0.85);
       };
       img.src = ev.target?.result as string;
@@ -174,7 +172,7 @@ export default function FoodAnalysisWizard() {
               <div className="absolute bottom-0 inset-x-0 bg-red-500/80 backdrop-blur-sm px-4 py-3 flex items-center justify-between gap-2">
                 <span className="text-white text-xs flex-1">{analyzeError}</span>
                 <button
-                  onClick={() => imageBlob && runAnalysis(imageBlob)}
+                  onClick={() => imageBlob && previewUrl && runAnalysis(imageBlob, previewUrl, mealType)}
                   className="flex items-center gap-1 bg-white/20 text-white text-xs px-3 py-1.5 rounded-full flex-shrink-0"
                 >
                   <RefreshCw className="w-3 h-3" />再試行
@@ -184,7 +182,7 @@ export default function FoodAnalysisWizard() {
             {/* 写真削除ボタン */}
             {!isAnalyzing && (
               <button
-                onClick={() => { setPreviewUrl(null); setImageBlob(null); setImageUrl(null); setAnalyzeError(null); }}
+                onClick={() => { setPreviewUrl(null); setImageBlob(null); setImageUrl(null); reset(); }}
                 className="absolute top-3 right-3 w-8 h-8 bg-black/40 backdrop-blur-sm text-white rounded-full flex items-center justify-center"
               >
                 <X className="w-4 h-4" />

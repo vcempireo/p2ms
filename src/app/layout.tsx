@@ -5,6 +5,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../styles/globals.css';
 import { AuthProvider } from '@/components/AuthProvider';
+import { FoodAnalysisProvider } from '@/components/FoodAnalysisContext';
+import AnalysisBanner from '@/components/AnalysisBanner';
 import BottomNav from '@/components/BottomNav';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -25,8 +27,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ja">
       <body className={`${inter.className} bg-ios-bg`}>
         <AuthProvider>
-          {children}
-          <BottomNav />
+          <FoodAnalysisProvider>
+            <AnalysisBanner />
+            {children}
+            <BottomNav />
+          </FoodAnalysisProvider>
         </AuthProvider>
       </body>
     </html>
