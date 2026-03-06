@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged, getRedirectResult, User } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 
 interface AuthContextType {
@@ -22,6 +22,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
+    // リダイレクトログイン後の結果を処理
+    getRedirectResult(auth).catch(() => {});
+
     // Firebaseのログイン状態を監視
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);

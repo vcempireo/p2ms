@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { signInWithPopup } from 'firebase/auth';
+import { signInWithRedirect } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase';
 
 export default function LoginPage() {
@@ -12,12 +12,10 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
     try {
-      await signInWithPopup(auth, googleProvider);
+      // PWAスタンドアロンモードではpopupがブロックされるためredirectを使用
+      await signInWithRedirect(auth, googleProvider);
     } catch (e: any) {
-      if (e.code !== 'auth/popup-closed-by-user') {
-        setError('ログインに失敗しました。もう一度お試しください。');
-      }
-    } finally {
+      setError('ログインに失敗しました。もう一度お試しください。');
       setLoading(false);
     }
   };
