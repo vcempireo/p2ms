@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import { AnalyzedFoodItem, AnalyzeResponse, getMealType } from '@/lib/types';
 import { Camera, Images, X, ChevronRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '@/lib/firebase';
 
 const AI_DISPLAY: Record<string, string> = {
   openai: 'GPT',
@@ -21,7 +23,8 @@ export default function FoodAnalysisWizard() {
   const { user } = useAuth();
   const [step, setStep] = useState<Step>('photo');
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [base64Image, setBase64Image] = useState<string | null>(null);
+  const [imageBlob, setImageBlob] = useState<Blob | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [analysisResult, setAnalysisResult] = useState<AnalyzeResponse | null>(null);
   const [items, setItems] = useState<AnalyzedFoodItem[]>([]);
   const [mealType, setMealType] = useState(getMealType(new Date()));
@@ -29,7 +32,7 @@ export default function FoodAnalysisWizard() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
-  // 画像選択・リサイズ
+  // 画像選択・リサイズ → Blob保存
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -44,9 +47,10 @@ export default function FoodAnalysisWizard() {
         canvas.width  = img.width  * scale;
         canvas.height = img.height * scale;
         canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const compressed = canvas.toDataURL('image/jpeg', 0.85);
-        setPreviewUrl(compressed);
-        setBase64Image(compressed.split(',')[1]);
+        // プレビュー用URL
+        setPreviewUrl(canvas.toDataURL('image/jpeg', 0.85));
+        // アップロード用Blob
+        canvas.toBlob((blob) => { if (blob) setImageBlob(blob); }, 'image/jpeg', 0.85);
       };
       img.src = ev.target?.result as string;
     };
@@ -59,16 +63,23 @@ export default function FoodAnalysisWizard() {
     return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` };
   };
 
-  // AI解析
+  // AI解析（Storage直アップ → URL送信）
   const handleAnalyze = async () => {
-    if (!base64Image) return;
+    if (!imageBlob || !user) return;
     setStep('analyzing');
     setError(null);
     try {
+      // 1. Firebase Storageに直接アップロード
+      const storageRef = ref(storage, `users/${user.uid}/meals/${Date.now()}.jpg`);
+      const snapshot = await uploadBytes(storageRef, imageBlob);
+      const url = await getDownloadURL(snapshot.ref);
+      setImageUrl(url);
+
+      // 2. URLだけAPIに送る
       const res = await fetch('/api/food/analyze', {
         method: 'POST',
         headers: await getAuthHeader(),
-        body: JSON.stringify({ base64Image }),
+        body: JSON.stringify({ imageUrl: url }),
       });
       if (!res.ok) throw new Error((await res.json()).error ?? '解析に失敗しました');
       const result: AnalyzeResponse = await res.json();
@@ -89,7 +100,7 @@ export default function FoodAnalysisWizard() {
 
   // 保存
   const handleSave = async () => {
-    if (!base64Image || !user) return;
+    if (!imageUrl || !user) return;
     setStep('saving');
     setError(null);
     try {
@@ -97,7 +108,7 @@ export default function FoodAnalysisWizard() {
         method: 'POST',
         headers: await getAuthHeader(),
         body: JSON.stringify({
-          imageBase64: base64Image,
+          imageUrl,
           mealType,
           mealTime: new Date().toISOString(),
           items,
@@ -146,7 +157,7 @@ export default function FoodAnalysisWizard() {
         <div className="relative aspect-square rounded-2xl overflow-hidden">
           <img src={previewUrl} alt="食事写真" className="w-full h-full object-cover" />
           <button
-            onClick={() => { setPreviewUrl(null); setBase64Image(null); }}
+            onClick={() => { setPreviewUrl(null); setImageBlob(null); setImageUrl(null); }}
             className="absolute top-3 right-3 w-8 h-8 bg-black/40 backdrop-blur-sm text-white rounded-full flex items-center justify-center"
           >
             <X className="w-4 h-4" />
@@ -204,7 +215,7 @@ export default function FoodAnalysisWizard() {
       {/* 解析ボタン */}
       <button
         onClick={handleAnalyze}
-        disabled={!base64Image}
+        disabled={!imageBlob}
         className="w-full py-4 rounded-2xl font-semibold text-white text-base bg-ios-blue disabled:bg-ios-tertiary disabled:cursor-not-allowed transition-colors shadow-ios-fab active:opacity-80"
       >
         AI で解析する
