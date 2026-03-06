@@ -63,6 +63,7 @@ async function analyzeWithOpenAI(imageUrl: string, model: string): Promise<Analy
   const { default: OpenAI } = await import('openai');
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+  // GASと同じようにbase64 data URLを直接送信
   const response = await client.chat.completions.create({
     model,
     response_format: { type: 'json_object' }, // JSON確実出力・パースエラー防止
@@ -73,7 +74,7 @@ async function analyzeWithOpenAI(imageUrl: string, model: string): Promise<Analy
           { type: 'text', text: SYSTEM_PROMPT },
           {
             type: 'image_url',
-            image_url: { url: imageUrl },
+            image_url: { url: imageUrl }, // base64 data URL
           },
         ],
       },

@@ -50,6 +50,7 @@ export interface AnalyzeResponse {
   items: AnalyzedFoodItem[];
   aiProvider: AIProvider;
   aiModel: string;
+  imageUrl: string; // サーバー側でStorageアップロードしたURL
 }
 
 /** Firestore: food_raw_log ドキュメント（1食品 = 1ドキュメント） */

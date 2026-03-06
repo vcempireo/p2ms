@@ -5,8 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import { AnalyzedFoodItem, AnalyzeResponse, MealType, getMealType } from '@/lib/types';
 import { Camera, Images, X, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '@/lib/firebase';
 import { useFoodAnalysis } from './FoodAnalysisContext';
 
 const AI_DISPLAY: Record<string, string> = {
@@ -42,35 +40,40 @@ export default function FoodAnalysisWizard() {
     return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` };
   };
 
-  // バックグラウンドで解析を実行（ページを離れても継続）
-  const runAnalysis = async (blob: Blob, preview: string, meal: MealType) => {
+  // バックグラウンドで解析を実行（全体60秒でタイムアウト・ページを離れても継続）
+  // base64Image: canvas.toDataURL で生成した "data:image/jpeg;base64,..." 形式
+  const runAnalysis = async (base64Image: string, preview: string, meal: MealType, blob?: Blob) => {
     if (!user) return;
     startAnalysis(preview, meal);
-    try {
-      const storageRef = ref(storage, `users/${user.uid}/meals/${Date.now()}.jpg`);
-      const snapshot = await uploadBytes(storageRef, blob);
-      const url = await getDownloadURL(snapshot.ref);
-      setImageUrl(url);
 
+    const controller = new AbortController();
+    const globalTimeout = setTimeout(() => controller.abort(), 60000);
+
+    try {
+      // サーバー側（Admin SDK）でStorageアップロード＋AI解析を一括実行
       const res = await fetch('/api/food/analyze', {
         method: 'POST',
         headers: await getAuthHeader(),
-        body: JSON.stringify({ imageUrl: url }),
+        body: JSON.stringify({ base64Image }),
+        signal: controller.signal,
       });
       if (!res.ok) throw new Error((await res.json()).error ?? '解析に失敗しました');
       const result: AnalyzeResponse = await res.json();
-      setDone(url, result, result.items);
+      setImageUrl(result.imageUrl);
+      setDone(result.imageUrl, result, result.items);
       setAnalysisResult(result);
       setItems(result.items);
       setStep('review');
     } catch (e: any) {
       const msg = e.message ?? '解析に失敗しました';
       setGlobalError(
-        msg.includes('504') || msg.includes('timeout') || msg.includes('fetch')
-          ? '解析がタイムアウトしました'
+        e.name === 'AbortError' || msg.includes('504') || msg.includes('timeout')
+          ? '解析がタイムアウトしました（再試行してください）'
           : msg,
-        blob
+        blob ?? new Blob()
       );
+    } finally {
+      clearTimeout(globalTimeout);
     }
   };
 
@@ -91,12 +94,14 @@ export default function FoodAnalysisWizard() {
         canvas.width  = img.width  * scale;
         canvas.height = img.height * scale;
         canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        // canvas.toDataURL の結果 = base64 data URL。そのままAPIに送れる
         const preview = canvas.toDataURL('image/jpeg', 0.85);
         setPreviewUrl(preview);
+        // blob は retry時のsetGlobalError用にstateで保持するのみ
         canvas.toBlob((blob) => {
           if (!blob) return;
           setImageBlob(blob);
-          runAnalysis(blob, preview, mealType);
+          runAnalysis(preview, preview, mealType, blob);
         }, 'image/jpeg', 0.85);
       };
       img.src = ev.target?.result as string;
@@ -172,7 +177,7 @@ export default function FoodAnalysisWizard() {
               <div className="absolute bottom-0 inset-x-0 bg-red-500/80 backdrop-blur-sm px-4 py-3 flex items-center justify-between gap-2">
                 <span className="text-white text-xs flex-1">{analyzeError}</span>
                 <button
-                  onClick={() => imageBlob && previewUrl && runAnalysis(imageBlob, previewUrl, mealType)}
+                  onClick={() => previewUrl && runAnalysis(previewUrl, previewUrl, mealType, imageBlob ?? undefined)}
                   className="flex items-center gap-1 bg-white/20 text-white text-xs px-3 py-1.5 rounded-full flex-shrink-0"
                 >
                   <RefreshCw className="w-3 h-3" />再試行
