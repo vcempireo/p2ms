@@ -23,7 +23,7 @@
 
 ## PC2（heal.local）→ PC1（HEALTHY-PC）へ
 
-- [ ] **【重要】写真のアップロードフローを変更した。FoodAnalysisWizardの修正が必要。**
+- [x] **【重要】写真のアップロードフローを変更した。FoodAnalysisWizardの修正が必要。**
 
   **旧フロー（廃止）:**
   ```
