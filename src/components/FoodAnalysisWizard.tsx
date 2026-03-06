@@ -29,6 +29,7 @@ export default function FoodAnalysisWizard() {
   const [items, setItems] = useState<AnalyzedFoodItem[]>([]);
   const [mealType, setMealType] = useState(getMealType(new Date()));
   const [error, setError] = useState<string | null>(null);
+  const [elapsed, setElapsed] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
@@ -68,6 +69,8 @@ export default function FoodAnalysisWizard() {
     if (!imageBlob || !user) return;
     setStep('analyzing');
     setError(null);
+    setElapsed(0);
+    const timer = setInterval(() => setElapsed(s => s + 1), 1000);
     try {
       // 1. Firebase Storageに直接アップロード
       const storageRef = ref(storage, `users/${user.uid}/meals/${Date.now()}.jpg`);
@@ -87,8 +90,13 @@ export default function FoodAnalysisWizard() {
       setItems(result.items);
       setStep('review');
     } catch (e: any) {
-      setError(e.message);
+      const msg = e.message ?? '解析に失敗しました';
+      setError(msg.includes('504') || msg.includes('timeout') || msg.includes('fetch')
+        ? '解析がタイムアウトしました。時間をおいて再試行してください。'
+        : msg);
       setStep('photo');
+    } finally {
+      clearInterval(timer);
     }
   };
 
@@ -237,6 +245,7 @@ export default function FoodAnalysisWizard() {
       <div className="text-center">
         <p className="font-semibold text-ios-label">AI が解析中...</p>
         <p className="text-sm text-ios-secondary mt-1">栄養素を推定しています</p>
+        <p className="text-xs text-ios-tertiary mt-2">{elapsed}秒経過{elapsed >= 10 ? '（20〜30秒かかる場合があります）' : ''}</p>
       </div>
     </div>
   );

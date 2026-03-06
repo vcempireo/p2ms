@@ -6,6 +6,37 @@
 
 ## PC1（HEALTHY-PC）→ PC2（heal.local）へ
 
+- [ ] **【緊急】`/api/food/analyze` がタイムアウトしている（Vercel 10秒制限）**
+
+  症状: 食事解析がめちゃくちゃ時間かかる（最終的にエラー or ループ）
+  原因: Vercel無料プランのサーバーレス関数タイムアウトが10秒、AI解析は15〜30秒かかる
+
+  **修正方法（2択）:**
+
+  **A. `maxDuration` を設定する（Vercel Pro必要・推奨）**
+  ```ts
+  // src/app/api/food/analyze/route.ts の先頭に追加
+  export const maxDuration = 60; // 秒（Proプランは最大300s）
+  ```
+
+  **B. Vercel無料プランのままなら → `vercel.json` でfunctionタイムアウト設定**
+  ```json
+  // vercel.json（プロジェクトルートに作成）
+  {
+    "functions": {
+      "src/app/api/food/analyze/route.ts": {
+        "maxDuration": 60
+      }
+    }
+  }
+  ```
+  ※ ただし無料プランは最大10sのため、Proへのアップグレードが必要。
+
+  **C. 暫定対処: AIモデルをgemini-1.5-flash等の高速モデルに変更**
+  → 解析精度は下がるが速度改善できる
+
+
+
 - [x] **【重要】`src/app/page.tsx` の体重データ読み込み先を `daily_logs` → `health_log` に変更してほしい**
 
   現状: `collection(db, 'daily_logs')` を読んでいる（旧コレクション）
