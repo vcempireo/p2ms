@@ -48,12 +48,21 @@ export default function FoodAnalysisWizard() {
     startAnalysis(preview, meal);
 
     const controller = new AbortController();
+    // 全体45秒でタイムアウト（uploadBytes は AbortController 非対応のため Promise.race で対応）
     const globalTimeout = setTimeout(() => controller.abort(), 45000);
 
     try {
+      // アップロードに20秒以上かかる場合はタイムアウト
       const storageRef = ref(storage, `users/${user.uid}/meals/${Date.now()}.jpg`);
-      const snapshot = await uploadBytes(storageRef, blob);
-      const url = await getDownloadURL(snapshot.ref);
+      const url = await Promise.race([
+        (async () => {
+          const snapshot = await uploadBytes(storageRef, blob);
+          return await getDownloadURL(snapshot.ref);
+        })(),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('アップロードがタイムアウトしました')), 20000)
+        ),
+      ]);
       setImageUrl(url);
 
       const res = await fetch('/api/food/analyze', {
