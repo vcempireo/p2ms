@@ -76,11 +76,15 @@ async function seedHealthLog(uid: string, days: number) {
     const measureTime = new Date(date);
     measureTime.setHours(7, randInt(0, 30), 0);
 
+    // JST日付をdocIdに使う（1日1ドキュメント設計）
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const dateKey = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+
     const ref = db
       .collection('users')
       .doc(uid)
       .collection('health_log')
-      .doc();
+      .doc(dateKey);
 
     batch.set(ref, {
       timestamp: Timestamp.fromDate(measureTime),
@@ -89,7 +93,7 @@ async function seedHealthLog(uid: string, days: number) {
       bmi,
       lbm,
       steps: randInt(3000, 14000),
-    });
+    }, { merge: true });
 
     batchCount++;
 
