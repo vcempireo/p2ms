@@ -13,13 +13,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: '認証が必要です' }, { status: 401 });
     }
 
-    const { base64Image } = await req.json();
+    const { imageUrl } = await req.json();
 
-    if (!base64Image) {
-      return NextResponse.json({ error: '画像データがありません' }, { status: 400 });
+    if (!imageUrl) {
+      return NextResponse.json({ error: '画像URLがありません' }, { status: 400 });
     }
 
-    const result = await analyzeFoodImage(base64Image);
+    const result = await analyzeFoodImage(imageUrl);
 
     return NextResponse.json(result);
   } catch (e: any) {

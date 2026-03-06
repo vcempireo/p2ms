@@ -10,18 +10,19 @@ export interface AnalysisResult {
 /**
  * 食事写真をAIで解析する
  * 環境変数 AI_PROVIDER / AI_MODEL でモデルを切り替え可能
+ * @param imageUrl Firebase Storage の公開URL
  */
-export async function analyzeFoodImage(base64Image: string): Promise<AnalysisResult> {
+export async function analyzeFoodImage(imageUrl: string): Promise<AnalysisResult> {
   const provider = (process.env.AI_PROVIDER ?? 'openai') as AIProvider;
   const model = process.env.AI_MODEL ?? 'gpt-4o';
 
   switch (provider) {
     case 'openai':
-      return analyzeWithOpenAI(base64Image, model);
+      return analyzeWithOpenAI(imageUrl, model);
     case 'gemini':
-      return analyzeWithGemini(base64Image, model);
+      return analyzeWithGemini(imageUrl, model);
     case 'anthropic':
-      return analyzeWithAnthropic(base64Image, model);
+      return analyzeWithAnthropic(imageUrl, model);
     default:
       throw new Error(`未対応のAIプロバイダ: ${provider}`);
   }
@@ -54,7 +55,7 @@ const SYSTEM_PROMPT = `あなたは栄養士AIです。
 // ============================================================
 // OpenAI GPT-4o Vision
 // ============================================================
-async function analyzeWithOpenAI(base64Image: string, model: string): Promise<AnalysisResult> {
+async function analyzeWithOpenAI(imageUrl: string, model: string): Promise<AnalysisResult> {
   const { default: OpenAI } = await import('openai');
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -67,7 +68,7 @@ async function analyzeWithOpenAI(base64Image: string, model: string): Promise<An
           { type: 'text', text: SYSTEM_PROMPT },
           {
             type: 'image_url',
-            image_url: { url: `data:image/jpeg;base64,${base64Image}` },
+            image_url: { url: imageUrl },
           },
         ],
       },
@@ -84,7 +85,7 @@ async function analyzeWithOpenAI(base64Image: string, model: string): Promise<An
 // ============================================================
 // Google Gemini Vision
 // ============================================================
-async function analyzeWithGemini(base64Image: string, model: string): Promise<AnalysisResult> {
+async function analyzeWithGemini(imageUrl: string, model: string): Promise<AnalysisResult> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { GoogleGenerativeAI } = (await import(/* webpackIgnore: true */ '@google/generative-ai' as any)) as any;
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? '');
@@ -93,8 +94,8 @@ async function analyzeWithGemini(base64Image: string, model: string): Promise<An
   const result = await geminiModel.generateContent([
     SYSTEM_PROMPT,
     {
-      inlineData: {
-        data: base64Image,
+      fileData: {
+        fileUri: imageUrl,
         mimeType: 'image/jpeg',
       },
     },
@@ -111,7 +112,7 @@ async function analyzeWithGemini(base64Image: string, model: string): Promise<An
 // ============================================================
 // Anthropic Claude Vision
 // ============================================================
-async function analyzeWithAnthropic(base64Image: string, model: string): Promise<AnalysisResult> {
+async function analyzeWithAnthropic(imageUrl: string, model: string): Promise<AnalysisResult> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Anthropic = ((await import(/* webpackIgnore: true */ '@anthropic-ai/sdk' as any)) as any).default;
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -126,9 +127,8 @@ async function analyzeWithAnthropic(base64Image: string, model: string): Promise
           {
             type: 'image',
             source: {
-              type: 'base64',
-              media_type: 'image/jpeg',
-              data: base64Image,
+              type: 'url',
+              url: imageUrl,
             },
           },
           { type: 'text', text: SYSTEM_PROMPT },

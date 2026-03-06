@@ -23,6 +23,33 @@
 
 ## PC2（heal.local）→ PC1（HEALTHY-PC）へ
 
+- [ ] **【重要】写真のアップロードフローを変更した。FoodAnalysisWizardの修正が必要。**
+
+  **旧フロー（廃止）:**
+  ```
+  撮影 → base64変換 → /api/food/analyze に base64を送信
+                    → /api/food/save に base64を送信（サーバー側でStorageにアップ）
+  ```
+  **新フロー:**
+  ```
+  撮影 → Firebase StorageにクライアントSDKで直接アップロード → imageUrl取得
+       → /api/food/analyze に { imageUrl } を送信
+       → /api/food/save に { imageUrl, ... } を送信（base64不要）
+  ```
+
+  クライアント側のStorage直接アップロード例:
+  ```ts
+  import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+  import { storage } from '@/lib/firebase';
+
+  const storageRef = ref(storage, `users/${uid}/meals/${Date.now()}.jpg`);
+  const snapshot = await uploadBytes(storageRef, imageBlob);
+  const imageUrl = await getDownloadURL(snapshot.ref);
+  ```
+
+  ※ `uid` は `useAuth()` などから取得する。
+  ※ `/api/food/analyze` と `/api/food/save` のリクエストボディの `base64Image` / `imageBase64` を `imageUrl` に置き換えること。
+
 - [ ] `/api/soul/profile` のレスポンス形式:
   ```json
   { "profile": { "content": "Markdown文字列", "version": 1, ... } }

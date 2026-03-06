@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Timestamp } from 'firebase-admin/firestore';
-import { getAdminDb, getAdminStorage, verifyAuthToken } from '@/lib/firebase-admin';
+import { getAdminDb, verifyAuthToken } from '@/lib/firebase-admin';
 import { AnalyzedFoodItem, MealType, AIProvider } from '@/lib/types';
 
 export const maxDuration = 60;
 
 interface SaveRequest {
-  imageBase64: string;
+  imageUrl: string;       // クライアントがStorageに直接アップロードしたURL
   mealType: MealType;
   mealTime: string;       // ISO 8601 文字列
   items: AnalyzedFoodItem[];
@@ -23,30 +23,15 @@ export async function POST(req: NextRequest) {
     }
 
     const body: SaveRequest = await req.json();
-    const { imageBase64, mealType, mealTime, items, aiProvider, aiModel } = body;
+    const { imageUrl, mealType, mealTime, items, aiProvider, aiModel } = body;
 
-    if (!imageBase64 || !items?.length) {
+    if (!items?.length) {
       return NextResponse.json({ error: '必須パラメータが不足しています' }, { status: 400 });
     }
 
-    const adminStorage = await getAdminStorage();
     const adminDb = await getAdminDb();
 
-    // === 1. Firebase Storage に画像をアップロード ===
-    const bucket = adminStorage.bucket();
-    const fileName = `users/${userId}/meals/${Date.now()}.jpg`;
-    const file = bucket.file(fileName);
-
-    const imageBuffer = Buffer.from(imageBase64, 'base64');
-    await file.save(imageBuffer, {
-      metadata: { contentType: 'image/jpeg' },
-    });
-
-    // 公開URLを取得
-    await file.makePublic();
-    const imageUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
-
-    // === 2. 栄養素の合計を計算 ===
+    // === 1. 栄養素の合計を計算 ===
     const totalCalories = items.reduce((sum, item) => sum + item.calories, 0);
     const totalProtein  = items.reduce((sum, item) => sum + item.protein, 0);
     const totalFat      = items.reduce((sum, item) => sum + item.fat, 0);
