@@ -42,10 +42,14 @@ export default function FoodAnalysisWizard() {
     return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` };
   };
 
-  // バックグラウンドで解析を実行（ページを離れても継続）
+  // バックグラウンドで解析を実行（全体45秒でタイムアウト・ページを離れても継続）
   const runAnalysis = async (blob: Blob, preview: string, meal: MealType) => {
     if (!user) return;
     startAnalysis(preview, meal);
+
+    const controller = new AbortController();
+    const globalTimeout = setTimeout(() => controller.abort(), 45000);
+
     try {
       const storageRef = ref(storage, `users/${user.uid}/meals/${Date.now()}.jpg`);
       const snapshot = await uploadBytes(storageRef, blob);
@@ -56,6 +60,7 @@ export default function FoodAnalysisWizard() {
         method: 'POST',
         headers: await getAuthHeader(),
         body: JSON.stringify({ imageUrl: url }),
+        signal: controller.signal,
       });
       if (!res.ok) throw new Error((await res.json()).error ?? '解析に失敗しました');
       const result: AnalyzeResponse = await res.json();
@@ -66,11 +71,13 @@ export default function FoodAnalysisWizard() {
     } catch (e: any) {
       const msg = e.message ?? '解析に失敗しました';
       setGlobalError(
-        msg.includes('504') || msg.includes('timeout') || msg.includes('fetch')
-          ? '解析がタイムアウトしました'
+        e.name === 'AbortError' || msg.includes('504') || msg.includes('timeout')
+          ? '解析がタイムアウトしました（再試行してください）'
           : msg,
         blob
       );
+    } finally {
+      clearTimeout(globalTimeout);
     }
   };
 

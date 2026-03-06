@@ -1,0 +1,15 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // ユーザー個人の食事写真: 本人のみ読み書き可能
+    match /users/{uid}/meals/{fileName} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // その他は全て拒否
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

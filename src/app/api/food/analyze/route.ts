@@ -7,19 +7,24 @@ export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   try {
+    console.log('[analyze] 1. リクエスト受信');
+
     // 認証チェック（未ログインユーザーによるAPIコスト悪用を防ぐ）
     const uid = await verifyAuthToken(req);
     if (!uid) {
       return NextResponse.json({ error: '認証が必要です' }, { status: 401 });
     }
+    console.log('[analyze] 2. 認証OK uid:', uid);
 
     const { imageUrl } = await req.json();
 
     if (!imageUrl) {
       return NextResponse.json({ error: '画像URLがありません' }, { status: 400 });
     }
+    console.log('[analyze] 3. imageUrl受信:', imageUrl.slice(0, 60) + '...');
 
     const result = await analyzeFoodImage(imageUrl);
+    console.log('[analyze] 4. 解析完了 items:', result.items.length);
 
     return NextResponse.json(result);
   } catch (e: any) {
