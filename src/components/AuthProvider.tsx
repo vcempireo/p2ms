@@ -22,26 +22,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    // リダイレクトログイン後の結果を処理
-    getRedirectResult(auth).catch(() => {});
+    let unsubscribe: () => void;
 
-    // Firebaseのログイン状態を監視
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
+    const init = async () => {
+      // リダイレクトログイン後の結果を先に処理してからonAuthStateChangedを開始
+      await getRedirectResult(auth).catch(() => {});
 
-      const isPublicPath = PUBLIC_PATHS.includes(pathname);
+      unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+        setLoading(false);
 
-      if (!currentUser && !isPublicPath) {
-        // 未ログインでログイン不要ページ以外にいる場合 → ログインへ
-        router.replace('/login');
-      } else if (currentUser && isPublicPath) {
-        // ログイン済みでログインページにいる場合 → ホームへ
-        router.replace('/');
-      }
-    });
+        const isPublicPath = PUBLIC_PATHS.includes(pathname);
 
-    return () => unsubscribe();
+        if (!currentUser && !isPublicPath) {
+          router.replace('/login');
+        } else if (currentUser && isPublicPath) {
+          router.replace('/');
+        }
+      });
+    };
+
+    init();
+    return () => unsubscribe?.();
   }, [pathname, router]);
 
   // 認証確認中はローディング表示
