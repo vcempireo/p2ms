@@ -6,34 +6,49 @@
 
 ## PC1（HEALTHY-PC）→ PC2（heal.local）へ
 
-- [ ] **【緊急】`/api/food/analyze` がタイムアウトしている（Vercel 10秒制限）**
+- [ ] **【緊急】解析が遅すぎる・コスト問題 → 2段階分割に変更してほしい**
 
-  症状: 食事解析がめちゃくちゃ時間かかる（最終的にエラー or ループ）
-  原因: Vercel無料プランのサーバーレス関数タイムアウトが10秒、AI解析は15〜30秒かかる
+  ユーザーのGASロジックを参考にした設計案。GASでは以下の2段階に分けていた：
 
-  **修正方法（2択）:**
+  **旧GAS設計（参考）:**
+  ```
+  Step1: doPost（画像解析）
+    → GPT-4o Vision: JSON構造だけ返す（items配列のみ）、max_tokens: 1000
+    → シンプルなプロンプト＋response_format: json_object → 速い
 
-  **A. `maxDuration` を設定する（Vercel Pro必要・推奨）**
+  Step2: aggregateNutritionDataIncremental（後からバッチ）
+    → GPT-4o-mini: テキストのみでAIコメント生成、max_tokens: 400
+    → 画像不要 = 安くて速い
+  ```
+
+  **現在の推定問題点:**
+  - `/api/food/analyze` が画像解析＋AIコメント生成を1回のAPIで全部やっている
+  - プロンプトが複雑 → トークン増 → 遅い＆高い
+  - Vercel 10秒タイムアウトで失敗
+
+  **推奨修正:**
+
+  **A. `/api/food/analyze` を軽くする（最重要）**
+  ```
+  - 画像解析のみに絞る（JSON items配列を返すだけ）
+  - response_format: { type: "json_object" } を使う
+  - AIコメントはここで生成しない
+  - モデルを gemini-1.5-flash に変更（GPT-4oより3〜5倍速い、コスト1/10）
+  ```
+
+  **B. AIコメントは `/api/food/save` の中でテキストのみ生成**
+  ```
+  - 保存時に集計済みデータ（menus, PFC合計）を使ってAIコメント生成
+  - 画像不要なので gpt-4o-mini / gemini-1.5-flash で十分
+  - max_tokens: 300〜400 で簡潔に
+  ```
+
+  **C. `maxDuration = 60` も念のため追加**
   ```ts
-  // src/app/api/food/analyze/route.ts の先頭に追加
-  export const maxDuration = 60; // 秒（Proプランは最大300s）
+  export const maxDuration = 60; // Vercel Pro必要
   ```
 
-  **B. Vercel無料プランのままなら → `vercel.json` でfunctionタイムアウト設定**
-  ```json
-  // vercel.json（プロジェクトルートに作成）
-  {
-    "functions": {
-      "src/app/api/food/analyze/route.ts": {
-        "maxDuration": 60
-      }
-    }
-  }
-  ```
-  ※ ただし無料プランは最大10sのため、Proへのアップグレードが必要。
-
-  **C. 暫定対処: AIモデルをgemini-1.5-flash等の高速モデルに変更**
-  → 解析精度は下がるが速度改善できる
+  期待効果: 解析時間 30秒 → 5〜8秒、コスト 1/5〜1/10
 
 
 
