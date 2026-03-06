@@ -124,7 +124,7 @@
   - `format(parseISO(l.date), ...)` → `l.timestamp.toDate()` でDateに変換
   - `uid` は `useAuth()` の `user.uid` から取得する
 
-- [ ] **【お願い】Storageアップロード前に画像を圧縮してほしい（コスト削減）**
+- [x] **【お願い】Storageアップロード前に画像を圧縮してほしい（コスト削減）**
 
   GASでは1024px / 品質0.85で圧縮していた。P²MSでも同様に実装してほしい。
 
@@ -179,19 +179,19 @@
   ※ `uid` は `useAuth()` などから取得する。
   ※ `/api/food/analyze` と `/api/food/save` のリクエストボディの `base64Image` / `imageBase64` を `imageUrl` に置き換えること。
 
-- [ ] `/api/soul/profile` のレスポンス形式:
+- [x] `/api/soul/profile` のレスポンス形式:
   ```json
   { "profile": { "content": "Markdown文字列", "version": 1, ... } }
   // 未生成時は { "profile": null }
   ```
   `content` を `react-markdown` で表示推奨（`npm install react-markdown`）
 
-- [ ] `/api/food/save` と `/api/health/sync` のリクエストボディから `userId` を削除済み。
+- [x] `/api/food/save` と `/api/health/sync` のリクエストボディから `userId` を削除済み。
   代わりに `Authorization: Bearer {idToken}` ヘッダーが必須。
 
 - [x] 食事記録の画像入力にギャラリー選択を追加してほしい。カメラ起動だけでなく「ライブラリから選ぶ」選択肢もUIに置く（`FoodAnalysisWizard` の撮影ステップ）。
 
-- [ ] Soul Architectureのテストデータ投入済み:
+- [x] Soul Architectureのテストデータ投入済み:
   - パス: `/users/tqUkyNIfUrXmD7hfemPbcny2DAY2/soul_architecture/core`
   - `content` フィールドにMarkdown全文が入っている
 
