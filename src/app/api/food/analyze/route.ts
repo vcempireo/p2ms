@@ -27,12 +27,21 @@ export async function POST(req: NextRequest) {
     const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, '');
     const imageBuffer = Buffer.from(base64Data, 'base64');
     const adminStorage = await getAdminStorage();
-    const bucket = adminStorage.bucket();
+    const bucketName = process.env.FIREBASE_STORAGE_BUCKET
+      ?? process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
+    if (!bucketName) throw new Error('FIREBASE_STORAGE_BUCKET が未設定です');
+    const bucket = adminStorage.bucket(bucketName);
     const fileName = `users/${uid}/meals/${Date.now()}.jpg`;
     const file = bucket.file(fileName);
-    await file.save(imageBuffer, { metadata: { contentType: 'image/jpeg' } });
-    await file.makePublic();
-    const imageUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+    // ダウンロードトークンを付与してアップロード（makePublic不要・セキュリティルール準拠）
+    const downloadToken = crypto.randomUUID();
+    await file.save(imageBuffer, {
+      metadata: {
+        contentType: 'image/jpeg',
+        metadata: { firebaseStorageDownloadTokens: downloadToken },
+      },
+    });
+    const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(fileName)}?alt=media&token=${downloadToken}`;
     console.log('[analyze] 4. Storage アップロード完了:', imageUrl.slice(0, 60) + '...');
 
     // OpenAIに base64 を渡して解析
