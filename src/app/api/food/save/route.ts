@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Timestamp } from 'firebase-admin/firestore';
-import { getAdminDb, getAdminStorage } from '@/lib/firebase-admin';
+import { getAdminDb, getAdminStorage, verifyAuthToken } from '@/lib/firebase-admin';
 import { AnalyzedFoodItem, MealType, AIProvider } from '@/lib/types';
 
 export const maxDuration = 60;
@@ -10,17 +10,22 @@ interface SaveRequest {
   mealType: MealType;
   mealTime: string;       // ISO 8601 文字列
   items: AnalyzedFoodItem[];
-  userId: string;
   aiProvider: AIProvider;
   aiModel: string;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const body: SaveRequest = await req.json();
-    const { imageBase64, mealType, mealTime, items, userId, aiProvider, aiModel } = body;
+    // userIdはトークンから取得（クライアント送信値は信用しない）
+    const userId = await verifyAuthToken(req);
+    if (!userId) {
+      return NextResponse.json({ error: '認証が必要です' }, { status: 401 });
+    }
 
-    if (!imageBase64 || !items?.length || !userId) {
+    const body: SaveRequest = await req.json();
+    const { imageBase64, mealType, mealTime, items, aiProvider, aiModel } = body;
+
+    if (!imageBase64 || !items?.length) {
       return NextResponse.json({ error: '必須パラメータが不足しています' }, { status: 400 });
     }
 

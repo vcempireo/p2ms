@@ -44,3 +44,24 @@ export const getAdminStorage = async () => {
   const { getStorage } = await import('firebase-admin/storage');
   return getStorage(app);
 };
+
+/** Admin Auth インスタンスを取得（IDトークン検証用） */
+export const getAdminAuth = async () => {
+  const app = await getAdminApp();
+  const { getAuth } = await import('firebase-admin/auth');
+  return getAuth(app);
+};
+
+/**
+ * リクエストヘッダーのBearerトークンを検証してuidを返す
+ * 認証失敗時はnullを返す
+ */
+export const verifyAuthToken = async (req: { headers: { get: (key: string) => string | null } }) => {
+  const authHeader = req.headers.get('Authorization');
+  const idToken = authHeader?.replace('Bearer ', '');
+  if (!idToken) return null;
+
+  const adminAuth = await getAdminAuth();
+  const decoded = await adminAuth.verifyIdToken(idToken);
+  return decoded.uid;
+};

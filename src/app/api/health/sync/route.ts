@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Timestamp } from 'firebase-admin/firestore';
-import { getAdminDb } from '@/lib/firebase-admin';
+import { getAdminDb, verifyAuthToken } from '@/lib/firebase-admin';
 
 interface HealthRecord {
   timestamp: string;
@@ -13,14 +13,19 @@ interface HealthRecord {
 
 interface SyncRequest {
   records: HealthRecord[];
-  userId: string;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { records, userId }: SyncRequest = await req.json();
+    // userIdはトークンから取得（クライアント送信値は信用しない）
+    const userId = await verifyAuthToken(req);
+    if (!userId) {
+      return NextResponse.json({ error: '認証が必要です' }, { status: 401 });
+    }
 
-    if (!records?.length || !userId) {
+    const { records }: SyncRequest = await req.json();
+
+    if (!records?.length) {
       return NextResponse.json({ error: '必須パラメータが不足しています' }, { status: 400 });
     }
 

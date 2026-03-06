@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyzeFoodImage } from '@/lib/ai-analyzer';
+import { verifyAuthToken } from '@/lib/firebase-admin';
 
 // Vercel の実行時間制限を60秒に設定（デフォルトは10秒）
 export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   try {
+    // 認証チェック（未ログインユーザーによるAPIコスト悪用を防ぐ）
+    const uid = await verifyAuthToken(req);
+    if (!uid) {
+      return NextResponse.json({ error: '認証が必要です' }, { status: 401 });
+    }
+
     const { base64Image } = await req.json();
 
     if (!base64Image) {
