@@ -63,13 +63,7 @@ async function analyzeWithOpenAI(imageUrl: string, model: string): Promise<Analy
   const { default: OpenAI } = await import('openai');
   const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-  // Firebase Storage URLを直接渡すとOpenAIがfetchできない場合があるため、
-  // GASと同様にサーバー側でbase64に変換してから送信する
-  const imageRes = await fetch(imageUrl);
-  const arrayBuffer = await imageRes.arrayBuffer();
-  const base64 = Buffer.from(arrayBuffer).toString('base64');
-  const dataUrl = `data:image/jpeg;base64,${base64}`;
-
+  // GASと同じようにbase64 data URLを直接送信
   const response = await client.chat.completions.create({
     model,
     response_format: { type: 'json_object' }, // JSON確実出力・パースエラー防止
@@ -80,7 +74,7 @@ async function analyzeWithOpenAI(imageUrl: string, model: string): Promise<Analy
           { type: 'text', text: SYSTEM_PROMPT },
           {
             type: 'image_url',
-            image_url: { url: dataUrl },
+            image_url: { url: imageUrl }, // base64 data URL
           },
         ],
       },
