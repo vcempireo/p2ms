@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import { AnalyzedFoodItem, AnalyzeResponse, getMealType } from '@/lib/types';
-import { Camera, X, ChevronRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Camera, Images, X, ChevronRight, CheckCircle2, AlertCircle } from 'lucide-react';
 
 const AI_DISPLAY: Record<string, string> = {
   openai: 'GPT',
@@ -27,6 +27,7 @@ export default function FoodAnalysisWizard() {
   const [mealType, setMealType] = useState(getMealType(new Date()));
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
 
   // 画像選択・リサイズ
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +129,10 @@ export default function FoodAnalysisWizard() {
   // ────────────────────────────────
   if (step === 'photo') return (
     <div className="space-y-5">
+      {/* カメラ起動用（capture属性あり） */}
       <input ref={fileInputRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleImageSelect} />
+      {/* ギャラリー選択用（capture属性なし） */}
+      <input ref={galleryInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageSelect} />
 
       {error && (
         <div className="flex items-start gap-2 p-4 bg-red-50 rounded-2xl text-sm text-ios-red">
@@ -149,18 +153,34 @@ export default function FoodAnalysisWizard() {
           </button>
         </div>
       ) : (
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          className="w-full aspect-square rounded-2xl border-2 border-dashed border-ios-tertiary bg-ios-bg flex flex-col items-center justify-center gap-4 active:opacity-70 transition-opacity"
-        >
-          <div className="w-16 h-16 bg-ios-blue rounded-2xl flex items-center justify-center shadow-ios-fab">
-            <Camera className="w-8 h-8 text-white" />
-          </div>
-          <div className="text-center">
-            <p className="font-semibold text-ios-label">写真を撮影 / 選択</p>
-            <p className="text-sm text-ios-secondary mt-1">タップしてカメラを起動</p>
-          </div>
-        </button>
+        <div className="space-y-3">
+          {/* カメラボタン */}
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="w-full py-6 rounded-2xl border-2 border-dashed border-ios-tertiary bg-ios-bg flex items-center justify-center gap-4 active:opacity-70 transition-opacity"
+          >
+            <div className="w-12 h-12 bg-ios-blue rounded-xl flex items-center justify-center shadow-ios-fab">
+              <Camera className="w-6 h-6 text-white" />
+            </div>
+            <div className="text-left">
+              <p className="font-semibold text-ios-label">カメラで撮影</p>
+              <p className="text-sm text-ios-secondary mt-0.5">今すぐ食事を撮る</p>
+            </div>
+          </button>
+          {/* ライブラリボタン */}
+          <button
+            onClick={() => galleryInputRef.current?.click()}
+            className="w-full py-6 rounded-2xl border-2 border-dashed border-ios-tertiary bg-ios-bg flex items-center justify-center gap-4 active:opacity-70 transition-opacity"
+          >
+            <div className="w-12 h-12 bg-ios-purple rounded-xl flex items-center justify-center shadow-ios-fab">
+              <Images className="w-6 h-6 text-white" />
+            </div>
+            <div className="text-left">
+              <p className="font-semibold text-ios-label">ライブラリから選ぶ</p>
+              <p className="text-sm text-ios-secondary mt-0.5">保存済みの写真を使う</p>
+            </div>
+          </button>
+        </div>
       )}
 
       {/* 食事タイプ */}
