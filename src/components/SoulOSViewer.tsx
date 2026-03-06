@@ -11,13 +11,13 @@ const SECTIONS = [
   { key: 'V',   emoji: '✨', label: '最終所見',            hero: false },
 ];
 
-// Markdownをセクションごとに分割
+// Markdownをセクションごとに分割（## I. / I. どちらの形式にも対応）
 function parseSections(content: string): Record<string, string> {
   const result: Record<string, string> = {};
-  const regex = /^## ([IVX]+)\./gm;
+  // "## I." 形式と "I." 形式の両方に対応
+  const regex = /^(?:##\s+)?(I{1,3}|IV|V|VI{0,3}|IX|X)\./gm;
   const parts = content.split(regex);
 
-  // parts: ['前文', 'I', '本文...', 'II', '本文...', ...]
   for (let i = 1; i < parts.length; i += 2) {
     const key = parts[i].trim();
     const body = (parts[i + 1] ?? '').trim();
