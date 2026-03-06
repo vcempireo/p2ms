@@ -15,9 +15,15 @@ interface SyncRequest {
   records: HealthRecord[];
 }
 
+// ISO文字列 → JST日付キー（YYYY-MM-DD）
+const toDateKey = (iso: string): string => {
+  const d = new Date(iso);
+  const jst = new Date(d.getTime() + 9 * 60 * 60 * 1000);
+  return jst.toISOString().slice(0, 10);
+};
+
 export async function POST(req: NextRequest) {
   try {
-    // userIdはトークンから取得（クライアント送信値は信用しない）
     const userId = await verifyAuthToken(req);
     if (!userId) {
       return NextResponse.json({ error: '認証が必要です' }, { status: 401 });
@@ -31,42 +37,43 @@ export async function POST(req: NextRequest) {
 
     const adminDb = await getAdminDb();
     const userRef = adminDb.collection('users').doc(userId);
-    let synced = 0;
-    let skipped = 0;
 
-    // 500件ずつバッチ処理
-    const chunkSize = 500;
-    for (let i = 0; i < records.length; i += chunkSize) {
-      const chunk = records.slice(i, i + chunkSize);
-      const batch = adminDb.batch();
+    // 同じ日付のレコードをマージしてから書き込む
+    // （1リクエストに同日の体重・歩数が別々に来ることがある）
+    const dayMap = new Map<string, Record<string, unknown>>();
 
-      for (const record of chunk) {
-        const docId = record.timestamp.replace(/[:.]/g, '-');
-        const docRef = userRef.collection('health_log').doc(docId);
-        const existing = await docRef.get();
-
-        if (existing.exists) {
-          skipped++;
-          continue;
-        }
-
-        const data: Record<string, unknown> = {
+    for (const record of records) {
+      const dateKey = toDateKey(record.timestamp);
+      if (!dayMap.has(dateKey)) {
+        dayMap.set(dateKey, {
           timestamp: Timestamp.fromDate(new Date(record.timestamp)),
-        };
-        if (record.weight   != null) data.weight  = record.weight;
-        if (record.bodyFat  != null) data.bodyFat = record.bodyFat;
-        if (record.bmi      != null) data.bmi     = record.bmi;
-        if (record.lbm      != null) data.lbm     = record.lbm;
-        if (record.steps    != null) data.steps   = record.steps;
-
-        batch.set(docRef, data);
-        synced++;
+        });
       }
+      const data = dayMap.get(dateKey)!;
+      // 同日複数レコードがある場合は後のものを優先（より新しい計測値）
+      if (record.weight   != null) data.weight   = record.weight;
+      if (record.bodyFat  != null) data.bodyFat  = record.bodyFat;
+      if (record.bmi      != null) data.bmi      = record.bmi;
+      if (record.lbm      != null) data.lbm      = record.lbm;
+      if (record.steps    != null) data.steps    = record.steps;
+      // timestampは最新のものに更新
+      data.timestamp = Timestamp.fromDate(new Date(record.timestamp));
+    }
 
+    // 500件ずつバッチ書き込み（merge: trueで既存データに上書きマージ）
+    const entries = Array.from(dayMap.entries());
+    const chunkSize = 500;
+    for (let i = 0; i < entries.length; i += chunkSize) {
+      const chunk = entries.slice(i, i + chunkSize);
+      const batch = adminDb.batch();
+      for (const [dateKey, data] of chunk) {
+        const docRef = userRef.collection('health_log').doc(dateKey);
+        batch.set(docRef, data, { merge: true });
+      }
       await batch.commit();
     }
 
-    return NextResponse.json({ success: true, synced, skipped });
+    return NextResponse.json({ success: true, saved: entries.length });
   } catch (e: any) {
     console.error('[/api/health/sync] エラー:', e);
     return NextResponse.json(

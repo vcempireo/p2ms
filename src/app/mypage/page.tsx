@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import SoulOSViewer from '@/components/SoulOSViewer';
+import { Copy, Check, RefreshCw } from 'lucide-react';
 
 // 個人データの型
 interface UserProfile {
@@ -31,6 +32,11 @@ const MyPage = () => {
   const [soulError, setSoulError] = useState<string | null>(null);
   const [profile, setProfile] = useState<UserProfile>({});
 
+  // Health Auto Export 連携用トークン
+  const [webhookToken, setWebhookToken] = useState<string | null>(null);
+  const [tokenLoading, setTokenLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     if (!user) return;
 
@@ -55,6 +61,13 @@ const MyPage = () => {
             }));
           }
         }
+
+        // webhookトークン取得
+        const tokenRes = await fetch('/api/health/webhook-token', { headers });
+        if (tokenRes.ok) {
+          const tokenData = await tokenRes.json();
+          setWebhookToken(tokenData.token);
+        }
       } catch (e: any) {
         setSoulError(e.message ?? '不明なエラー');
         setSoulContent(null);
@@ -65,6 +78,32 @@ const MyPage = () => {
 
     fetchData();
   }, [user]);
+
+  // webhookトークンを生成/再生成
+  const generateToken = async () => {
+    if (!user || tokenLoading) return;
+    setTokenLoading(true);
+    try {
+      const idToken = await user.getIdToken();
+      const res = await fetch('/api/health/webhook-token', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${idToken}` },
+      });
+      const data = await res.json();
+      setWebhookToken(data.token);
+    } finally {
+      setTokenLoading(false);
+    }
+  };
+
+  // webhook URLをクリップボードにコピー
+  const copyWebhookUrl = () => {
+    if (!user || !webhookToken) return;
+    const url = `${location.origin}/api/health/webhook?uid=${user.uid}&token=${webhookToken}`;
+    navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className="min-h-screen bg-ios-bg pb-28">
@@ -105,6 +144,57 @@ const MyPage = () => {
               label="身長"
               value={profile.height ? `${profile.height} cm` : undefined}
             />
+          </div>
+        </div>
+
+        {/* Health Auto Export 連携 */}
+        <div className="bg-ios-card rounded-2xl shadow-ios-sm overflow-hidden">
+          <div className="px-4 pt-4 pb-3 border-b border-black/[0.06] flex items-center gap-2">
+            <span className="text-lg">❤️</span>
+            <h2 className="font-semibold text-ios-label">ヘルスデータ連携</h2>
+            <span className="text-xs text-ios-secondary ml-auto">Health Auto Export</span>
+          </div>
+          <div className="p-4 space-y-3">
+            <p className="text-xs text-ios-secondary leading-relaxed">
+              「Health Auto Export」アプリのWebhook URLに以下のURLを設定すると、体重・体脂肪・歩数などが自動連携されます。
+            </p>
+
+            {webhookToken ? (
+              <div className="space-y-2">
+                <div className="bg-ios-bg rounded-xl px-3 py-2 flex items-center gap-2">
+                  <code className="text-xs text-ios-label flex-1 truncate">
+                    {`${typeof window !== 'undefined' ? location.origin : ''}/api/health/webhook?uid=${user?.uid}&token=${webhookToken}`}
+                  </code>
+                  <button
+                    onClick={copyWebhookUrl}
+                    className="flex-shrink-0 text-ios-blue p-1 active:opacity-60"
+                  >
+                    {copied ? <Check className="w-4 h-4 text-ios-green" /> : <Copy className="w-4 h-4" />}
+                  </button>
+                </div>
+                <button
+                  onClick={generateToken}
+                  disabled={tokenLoading}
+                  className="flex items-center gap-1.5 text-xs text-ios-secondary active:opacity-60"
+                >
+                  <RefreshCw className={`w-3 h-3 ${tokenLoading ? 'animate-spin' : ''}`} />
+                  URLを再生成（流出時）
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={generateToken}
+                disabled={tokenLoading}
+                className="w-full py-2.5 bg-ios-blue text-white text-sm font-medium rounded-xl active:opacity-80"
+              >
+                {tokenLoading ? '生成中...' : 'Webhook URLを生成'}
+              </button>
+            )}
+
+            <div className="text-xs text-ios-tertiary space-y-1 pt-1">
+              <p>📱 対応データ: 体重 / 体脂肪率 / BMI / 除脂肪体重 / 歩数</p>
+              <p>⚙️ アプリ設定: Export Format → REST API、Method → POST</p>
+            </div>
           </div>
         </div>
 

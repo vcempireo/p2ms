@@ -16,8 +16,8 @@ import { ChevronRight, TrendingDown } from 'lucide-react';
 export default function Home() {
   const { user } = useAuth();
   const { system_settings } = dummyProfile;
-  const [latestLog, setLatestLog] = useState<HealthLog | null>(null);
   const [latestWeight, setLatestWeight] = useState<HealthLog | null>(null);
+  const [latestStats, setLatestStats] = useState<{ bmi?: number; bodyFat?: number; lbm?: number; steps?: number }>({});
   const [weightData, setWeightData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -28,14 +28,19 @@ export default function Home() {
         const q = query(
           collection(db, 'users', user.uid, 'health_log'),
           orderBy('timestamp', 'desc'),
-          limit(30)
+          limit(200)
         );
         const snap = await getDocs(q);
         const logs = snap.docs.map((d) => d.data() as HealthLog);
-        if (logs.length > 0) setLatestLog(logs[0]);
-        // weightがある最新レコードを別途取得
+        // 各フィールドは別タイムスタンプで記録されるため、それぞれ最新値を探す
         const withWeight = logs.find(l => l.weight != null);
         if (withWeight) setLatestWeight(withWeight);
+        setLatestStats({
+          bmi:     logs.find(l => l.bmi     != null)?.bmi,
+          bodyFat: logs.find(l => l.bodyFat != null)?.bodyFat,
+          lbm:     logs.find(l => l.lbm     != null)?.lbm,
+          steps:   logs.find(l => l.steps   != null)?.steps,
+        });
         setWeightData(
           [...logs].reverse()
             .filter((l) => l.weight)
@@ -122,28 +127,28 @@ export default function Home() {
         <div className="grid grid-cols-2 gap-3">
           <StatCard
             label="BMI"
-            value={latestLog?.bmi ?? '--'}
+            value={latestStats.bmi ?? '--'}
             unit=""
             color="bg-ios-blue"
             emoji="📊"
           />
           <StatCard
             label="体脂肪率"
-            value={latestLog?.bodyFat ?? '--'}
+            value={latestStats.bodyFat ?? '--'}
             unit="%"
             color="bg-ios-orange"
             emoji="🔥"
           />
           <StatCard
             label="除脂肪体重"
-            value={latestLog?.lbm ?? '--'}
+            value={latestStats.lbm ?? '--'}
             unit="kg"
             color="bg-ios-green"
             emoji="💪"
           />
           <StatCard
             label="歩数"
-            value={latestLog?.steps ? latestLog.steps.toLocaleString() : '--'}
+            value={latestStats.steps ? latestStats.steps.toLocaleString() : '--'}
             unit="歩"
             color="bg-ios-purple"
             emoji="🚶"
