@@ -50,6 +50,53 @@
 
   期待効果: 解析時間 30秒 → 5〜8秒、コスト 1/5〜1/10
 
+  ---
+
+  **【参考】旧GASの実際のプロンプト構造:**
+
+  **画像解析プロンプト（`/api/food/analyze` 用）← シンプルにするべき:**
+  ```
+  {aiRole}
+
+  この画像に写っている食事のすべてリストアップしそれぞれの
+  メニュー(menu) / カロリー(calories) / タンパク質(protein) / 脂質(fat) /
+  炭水化物(carbs) / 発酵性食物繊維(fermentable_dietary_fiber) /
+  その他の栄養素(other_nutrients) を推定してください。
+
+  **重要**: 客観的な栄養推定のみを実施してください。評価やアドバイスは不要です。
+
+  ルール:
+  - "items"は各食品オブジェクトの配列
+  - 数値はすべて半角数字、単位は含めない
+
+  出力（json object）:
+  { "items": [{ "menu": "...", "calories": "...", "protein": "...",
+    "fat": "...", "carbs": "...", "fermentable_dietary_fiber": "...",
+    "other_nutrients": "...", "estimated_amount": "..." }] }
+  ```
+  → `response_format: { type: "json_object" }` で確実にJSON取得
+  → モデル: gpt-4o / gemini-1.5-flash、max_tokens: 1000
+
+  **サマリープロンプト（`/api/food/save` 用）← テキストのみ・安いモデルで:**
+  ```
+  {aiRole}
+
+  【食事タイプ】{mealType}
+  【メニュー】{menus.join(", ")}
+  【合計栄養素】カロリー: {totalCalories}kcal / P: {totalProtein}g /
+                F: {totalFat}g / C: {totalCarbs}g / 食物繊維: {totalFiber}g
+
+  この{mealType}全体を総合評価し、以下を含めてください：
+  1. 総評（カロリー・PFCバランス）
+  2. 良い点
+  3. 改善点
+  4. 次回へのアドバイス
+
+  簡潔に3〜5文で回答してください。
+  ```
+  → 画像不要・テキストのみ
+  → モデル: gpt-4o-mini / gemini-1.5-flash、max_tokens: 400
+
 
 
 - [x] **【重要】`src/app/page.tsx` の体重データ読み込み先を `daily_logs` → `health_log` に変更してほしい**
