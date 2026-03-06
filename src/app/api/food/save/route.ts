@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Timestamp } from 'firebase-admin/firestore';
 import { getAdminDb, verifyAuthToken } from '@/lib/firebase-admin';
 import { AnalyzedFoodItem, MealType, AIProvider } from '@/lib/types';
+import { generateMealSummary } from '@/lib/meal-evaluator';
 
 export const maxDuration = 60;
 
@@ -82,6 +83,21 @@ export async function POST(req: NextRequest) {
     });
 
     await batch.commit();
+
+    // aiSummaryをバックグラウンドで生成してFirestoreを更新（失敗しても保存は完了扱い）
+    generateMealSummary({
+      mealType,
+      menus: items.map((i) => i.menu),
+      totalCalories,
+      totalProtein,
+      totalFat,
+      totalCarbs,
+      totalFiber,
+    }).then((aiSummary) => {
+      if (aiSummary) {
+        mealSummaryRef.update({ aiSummary }).catch(() => {});
+      }
+    });
 
     return NextResponse.json({ success: true, mealSummaryId: mealSummaryRef.id });
   } catch (e: any) {

@@ -32,25 +32,29 @@ export async function analyzeFoodImage(imageUrl: string): Promise<AnalysisResult
 // 食事解析プロンプト（共通）
 // ============================================================
 const SYSTEM_PROMPT = `あなたは栄養士AIです。
-添付の食事写真を分析し、以下のJSON形式で全ての食品を列挙してください。
+この画像に写っている食事を全てリストアップし、各食品の栄養素を推定してください。
 
-出力フォーマット（JSON配列のみ・説明文不要）:
-[{
-  "menu": "食品名（日本語）",
-  "estimatedAmount": "推定量（例: 1杯, 100g）",
-  "calories": 数値,
-  "protein": 数値,
-  "fat": 数値,
-  "carbs": 数値,
-  "fiber": 数値,
-  "otherNutrients": "その他の特記すべき栄養素や注意点（日本語）"
-}]
+出力フォーマット（JSONオブジェクト）:
+{
+  "items": [
+    {
+      "menu": "食品名（日本語）",
+      "estimatedAmount": "推定量（例: 1杯, 100g）",
+      "calories": 数値,
+      "protein": 数値,
+      "fat": 数値,
+      "carbs": 数値,
+      "fiber": 数値,
+      "otherNutrients": "特記すべき栄養素・注意点（日本語）"
+    }
+  ]
+}
 
-注意事項:
-- 血糖値スパイクを起こしやすい食品には必ず otherNutrients に言及する
-- 発酵性食物繊維（FODMAP）を含む場合は otherNutrients に記載
-- 不明な場合は一般的な値で推定し、推定であることを otherNutrients に記載
-- 必ずJSON配列のみ返す（マークダウンのコードブロックも不要）`;
+ルール:
+- 数値はすべて半角数字、単位は含めない
+- 血糖値スパイクを招く食品は otherNutrients に記載
+- 発酵性食物繊維（FODMAP）含む場合は otherNutrients に記載
+- 評価やアドバイスは不要。客観的な栄養推定のみ`;
 
 // ============================================================
 // OpenAI GPT-4o Vision
@@ -61,6 +65,7 @@ async function analyzeWithOpenAI(imageUrl: string, model: string): Promise<Analy
 
   const response = await client.chat.completions.create({
     model,
+    response_format: { type: 'json_object' }, // JSON確実出力・パースエラー防止
     messages: [
       {
         role: 'user',
@@ -73,11 +78,11 @@ async function analyzeWithOpenAI(imageUrl: string, model: string): Promise<Analy
         ],
       },
     ],
-    max_tokens: 2000,
+    max_tokens: 1000, // GASと同様。食品リストに2000は不要
   });
 
-  const content = response.choices[0]?.message?.content ?? '[]';
-  const items: AnalyzedFoodItem[] = JSON.parse(content);
+  const content = response.choices[0]?.message?.content ?? '{"items":[]}';
+  const items: AnalyzedFoodItem[] = JSON.parse(content).items ?? [];
 
   return { items, aiProvider: 'openai', aiModel: model };
 }
@@ -119,7 +124,7 @@ async function analyzeWithAnthropic(imageUrl: string, model: string): Promise<An
 
   const response = await client.messages.create({
     model,
-    max_tokens: 2000,
+    max_tokens: 1000,
     messages: [
       {
         role: 'user',
