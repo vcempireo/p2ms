@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import { AnalyzedFoodItem, AnalyzeResponse, getMealType } from '@/lib/types';
-import { Camera, Images, X, ChevronRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Camera, Images, X, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '@/lib/firebase';
 
@@ -16,7 +16,7 @@ const AI_DISPLAY: Record<string, string> = {
 
 const MEAL_TYPES = ['朝食', '昼食', '夕食', '間食'] as const;
 
-type Step = 'photo' | 'analyzing' | 'review' | 'saving' | 'done';
+type Step = 'photo' | 'review' | 'saving' | 'done';
 
 export default function FoodAnalysisWizard() {
   const router = useRouter();
@@ -28,16 +28,61 @@ export default function FoodAnalysisWizard() {
   const [analysisResult, setAnalysisResult] = useState<AnalyzeResponse | null>(null);
   const [items, setItems] = useState<AnalyzedFoodItem[]>([]);
   const [mealType, setMealType] = useState(getMealType(new Date()));
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analyzeError, setAnalyzeError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [elapsed, setElapsed] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
-  // 画像選択・リサイズ → Blob保存
+  // IDトークン取得ヘルパー
+  const getAuthHeader = async () => {
+    const idToken = await user?.getIdToken();
+    return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` };
+  };
+
+  // バックグラウンドで解析を実行
+  const runAnalysis = async (blob: Blob) => {
+    if (!user) return;
+    setIsAnalyzing(true);
+    setAnalyzeError(null);
+    try {
+      // Firebase Storageに直接アップロード
+      const storageRef = ref(storage, `users/${user.uid}/meals/${Date.now()}.jpg`);
+      const snapshot = await uploadBytes(storageRef, blob);
+      const url = await getDownloadURL(snapshot.ref);
+      setImageUrl(url);
+
+      // URLだけAPIに送る
+      const res = await fetch('/api/food/analyze', {
+        method: 'POST',
+        headers: await getAuthHeader(),
+        body: JSON.stringify({ imageUrl: url }),
+      });
+      if (!res.ok) throw new Error((await res.json()).error ?? '解析に失敗しました');
+      const result: AnalyzeResponse = await res.json();
+      setAnalysisResult(result);
+      setItems(result.items);
+      // 解析完了 → レビュー画面へ自動遷移
+      setStep('review');
+    } catch (e: any) {
+      const msg = e.message ?? '解析に失敗しました';
+      setAnalyzeError(
+        msg.includes('504') || msg.includes('timeout') || msg.includes('fetch')
+          ? '解析がタイムアウトしました'
+          : msg
+      );
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  // 画像選択 → 圧縮 → バックグラウンド解析を即開始
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setError(null);
+    setAnalyzeError(null);
+    setAnalysisResult(null);
+    setItems([]);
     const reader = new FileReader();
     reader.onload = (ev) => {
       const img = new Image();
@@ -48,56 +93,17 @@ export default function FoodAnalysisWizard() {
         canvas.width  = img.width  * scale;
         canvas.height = img.height * scale;
         canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
-        // プレビュー用URL
         setPreviewUrl(canvas.toDataURL('image/jpeg', 0.85));
-        // アップロード用Blob
-        canvas.toBlob((blob) => { if (blob) setImageBlob(blob); }, 'image/jpeg', 0.85);
+        canvas.toBlob((blob) => {
+          if (!blob) return;
+          setImageBlob(blob);
+          // 写真取得と同時にバックグラウンド解析を開始
+          runAnalysis(blob);
+        }, 'image/jpeg', 0.85);
       };
       img.src = ev.target?.result as string;
     };
     reader.readAsDataURL(file);
-  };
-
-  // IDトークン取得ヘルパー
-  const getAuthHeader = async () => {
-    const idToken = await user?.getIdToken();
-    return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` };
-  };
-
-  // AI解析（Storage直アップ → URL送信）
-  const handleAnalyze = async () => {
-    if (!imageBlob || !user) return;
-    setStep('analyzing');
-    setError(null);
-    setElapsed(0);
-    const timer = setInterval(() => setElapsed(s => s + 1), 1000);
-    try {
-      // 1. Firebase Storageに直接アップロード
-      const storageRef = ref(storage, `users/${user.uid}/meals/${Date.now()}.jpg`);
-      const snapshot = await uploadBytes(storageRef, imageBlob);
-      const url = await getDownloadURL(snapshot.ref);
-      setImageUrl(url);
-
-      // 2. URLだけAPIに送る
-      const res = await fetch('/api/food/analyze', {
-        method: 'POST',
-        headers: await getAuthHeader(),
-        body: JSON.stringify({ imageUrl: url }),
-      });
-      if (!res.ok) throw new Error((await res.json()).error ?? '解析に失敗しました');
-      const result: AnalyzeResponse = await res.json();
-      setAnalysisResult(result);
-      setItems(result.items);
-      setStep('review');
-    } catch (e: any) {
-      const msg = e.message ?? '解析に失敗しました';
-      setError(msg.includes('504') || msg.includes('timeout') || msg.includes('fetch')
-        ? '解析がタイムアウトしました。時間をおいて再試行してください。'
-        : msg);
-      setStep('photo');
-    } finally {
-      clearInterval(timer);
-    }
   };
 
   const updateItem = (i: number, field: keyof AnalyzedFoodItem, value: string | number) => {
@@ -144,36 +150,50 @@ export default function FoodAnalysisWizard() {
   );
 
   // ────────────────────────────────
-  // Step 1: 写真選択
+  // Step 1: 写真選択（バックグラウンド解析中もここを表示）
   // ────────────────────────────────
   if (step === 'photo') return (
     <div className="space-y-5">
-      {/* カメラ起動用（capture属性あり） */}
       <input ref={fileInputRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleImageSelect} />
-      {/* ギャラリー選択用（capture属性なし） */}
       <input ref={galleryInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageSelect} />
-
-      {error && (
-        <div className="flex items-start gap-2 p-4 bg-red-50 rounded-2xl text-sm text-ios-red">
-          <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
-          {error}
-        </div>
-      )}
 
       {/* 写真エリア */}
       {previewUrl ? (
-        <div className="relative aspect-square rounded-2xl overflow-hidden">
-          <img src={previewUrl} alt="食事写真" className="w-full h-full object-cover" />
-          <button
-            onClick={() => { setPreviewUrl(null); setImageBlob(null); setImageUrl(null); }}
-            className="absolute top-3 right-3 w-8 h-8 bg-black/40 backdrop-blur-sm text-white rounded-full flex items-center justify-center"
-          >
-            <X className="w-4 h-4" />
-          </button>
+        <div className="space-y-3">
+          <div className="relative aspect-square rounded-2xl overflow-hidden">
+            <img src={previewUrl} alt="食事写真" className="w-full h-full object-cover" />
+            {/* 解析中バナー（画像上にオーバーレイ） */}
+            {isAnalyzing && (
+              <div className="absolute bottom-0 inset-x-0 bg-black/50 backdrop-blur-sm px-4 py-3 flex items-center gap-3">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin flex-shrink-0" />
+                <span className="text-white text-sm font-medium">AI が解析中...</span>
+              </div>
+            )}
+            {/* エラーバナー */}
+            {analyzeError && (
+              <div className="absolute bottom-0 inset-x-0 bg-red-500/80 backdrop-blur-sm px-4 py-3 flex items-center justify-between gap-2">
+                <span className="text-white text-xs flex-1">{analyzeError}</span>
+                <button
+                  onClick={() => imageBlob && runAnalysis(imageBlob)}
+                  className="flex items-center gap-1 bg-white/20 text-white text-xs px-3 py-1.5 rounded-full flex-shrink-0"
+                >
+                  <RefreshCw className="w-3 h-3" />再試行
+                </button>
+              </div>
+            )}
+            {/* 写真削除ボタン */}
+            {!isAnalyzing && (
+              <button
+                onClick={() => { setPreviewUrl(null); setImageBlob(null); setImageUrl(null); setAnalyzeError(null); }}
+                className="absolute top-3 right-3 w-8 h-8 bg-black/40 backdrop-blur-sm text-white rounded-full flex items-center justify-center"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
         </div>
       ) : (
         <div className="space-y-3">
-          {/* カメラボタン */}
           <button
             onClick={() => fileInputRef.current?.click()}
             className="w-full py-6 rounded-2xl border-2 border-dashed border-ios-tertiary bg-ios-bg flex items-center justify-center gap-4 active:opacity-70 transition-opacity"
@@ -186,7 +206,6 @@ export default function FoodAnalysisWizard() {
               <p className="text-sm text-ios-secondary mt-0.5">今すぐ食事を撮る</p>
             </div>
           </button>
-          {/* ライブラリボタン */}
           <button
             onClick={() => galleryInputRef.current?.click()}
             className="w-full py-6 rounded-2xl border-2 border-dashed border-ios-tertiary bg-ios-bg flex items-center justify-center gap-4 active:opacity-70 transition-opacity"
@@ -219,39 +238,11 @@ export default function FoodAnalysisWizard() {
           ))}
         </div>
       </div>
-
-      {/* 解析ボタン */}
-      <button
-        onClick={handleAnalyze}
-        disabled={!imageBlob}
-        className="w-full py-4 rounded-2xl font-semibold text-white text-base bg-ios-blue disabled:bg-ios-tertiary disabled:cursor-not-allowed transition-colors shadow-ios-fab active:opacity-80"
-      >
-        AI で解析する
-      </button>
     </div>
   );
 
   // ────────────────────────────────
-  // Step 2: 解析中
-  // ────────────────────────────────
-  if (step === 'analyzing') return (
-    <div className="flex flex-col items-center justify-center py-24 gap-6">
-      {previewUrl && (
-        <div className="w-28 h-28 rounded-2xl overflow-hidden opacity-70">
-          <img src={previewUrl} alt="" className="w-full h-full object-cover" />
-        </div>
-      )}
-      <div className="w-8 h-8 border-3 border-ios-blue border-t-transparent rounded-full animate-spin" style={{ borderWidth: 3 }} />
-      <div className="text-center">
-        <p className="font-semibold text-ios-label">AI が解析中...</p>
-        <p className="text-sm text-ios-secondary mt-1">栄養素を推定しています</p>
-        <p className="text-xs text-ios-tertiary mt-2">{elapsed}秒経過{elapsed >= 10 ? '（20〜30秒かかる場合があります）' : ''}</p>
-      </div>
-    </div>
-  );
-
-  // ────────────────────────────────
-  // Step 3: 確認・編集
+  // Step 2: 確認・編集
   // ────────────────────────────────
   if (step === 'review') return (
     <div className="space-y-4">
@@ -329,8 +320,6 @@ export default function FoodAnalysisWizard() {
                 <X className="w-4 h-4" />
               </button>
             </div>
-
-            {/* 栄養素グリッド */}
             <div className="grid grid-cols-5 gap-1.5">
               {[
                 { key: 'calories' as const, label: 'kcal' },
@@ -357,7 +346,7 @@ export default function FoodAnalysisWizard() {
       {/* アクションボタン */}
       <div className="flex gap-3 pt-2">
         <button
-          onClick={() => setStep('photo')}
+          onClick={() => { setStep('photo'); setItems([]); setAnalysisResult(null); }}
           className="flex-1 py-3.5 rounded-2xl font-semibold text-ios-secondary bg-ios-bg"
         >
           撮り直す
@@ -375,7 +364,7 @@ export default function FoodAnalysisWizard() {
   );
 
   // ────────────────────────────────
-  // Step 4: 保存中
+  // Step 3: 保存中
   // ────────────────────────────────
   if (step === 'saving') return (
     <div className="flex flex-col items-center justify-center py-24 gap-5">
@@ -385,7 +374,7 @@ export default function FoodAnalysisWizard() {
   );
 
   // ────────────────────────────────
-  // Step 5: 完了
+  // Step 4: 完了
   // ────────────────────────────────
   return (
     <div className="flex flex-col items-center justify-center py-24 gap-4">
