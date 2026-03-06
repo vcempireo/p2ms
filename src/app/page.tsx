@@ -17,6 +17,7 @@ export default function Home() {
   const { user } = useAuth();
   const { system_settings } = dummyProfile;
   const [latestLog, setLatestLog] = useState<HealthLog | null>(null);
+  const [latestWeight, setLatestWeight] = useState<HealthLog | null>(null);
   const [weightData, setWeightData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,6 +33,9 @@ export default function Home() {
         const snap = await getDocs(q);
         const logs = snap.docs.map((d) => d.data() as HealthLog);
         if (logs.length > 0) setLatestLog(logs[0]);
+        // weightがある最新レコードを別途取得
+        const withWeight = logs.find(l => l.weight != null);
+        if (withWeight) setLatestWeight(withWeight);
         setWeightData(
           [...logs].reverse()
             .filter((l) => l.weight)
@@ -50,7 +54,7 @@ export default function Home() {
   }, [user]);
 
   const todayStr = format(new Date(), 'M月d日（E）', { locale: ja });
-  const currentWeight = latestLog?.weight;
+  const currentWeight = latestWeight?.weight;
   const targetWeight = system_settings.app_constants.target_weight_kg;
   const diff = currentWeight ? (currentWeight - targetWeight).toFixed(1) : null;
 
@@ -101,7 +105,7 @@ export default function Home() {
                 </div>
               )}
             </div>
-            <Link href="/mypage" className="flex items-center gap-1 text-ios-blue text-sm font-medium">
+            <Link href="/weight" className="flex items-center gap-1 text-ios-blue text-sm font-medium">
               詳細 <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
