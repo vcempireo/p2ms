@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { useAuth } from '@/components/AuthProvider';
+import SoulOSViewer from '@/components/SoulOSViewer';
 import profileData from '../../lib/pms-profile.json';
 
 interface StatCardProps {
@@ -98,14 +98,7 @@ const MyPage = () => {
               <div className="w-6 h-6 border-ios-blue border-t-transparent rounded-full animate-spin" style={{ borderWidth: 3 }} />
             </div>
           ) : soulContent ? (
-            <div className="prose prose-sm max-w-none text-ios-label
-              prose-headings:text-ios-label prose-headings:font-semibold
-              prose-h2:text-base prose-h3:text-sm
-              prose-p:text-ios-secondary prose-p:leading-relaxed
-              prose-strong:text-ios-label
-              prose-ul:text-ios-secondary prose-li:marker:text-ios-blue">
-              <ReactMarkdown>{soulContent}</ReactMarkdown>
-            </div>
+            <SoulOSViewer content={soulContent} />
           ) : (
             <div className="text-center py-8">
               <p className="text-ios-secondary text-sm">Soul OSがまだ生成されていません</p>
