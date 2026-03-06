@@ -240,7 +240,7 @@ function MealDetailSheet({ meal, onClose }: { meal: MealSummary; onClose: () => 
       <div className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm" onClick={onClose} />
 
       {/* シート本体 */}
-      <div className="fixed bottom-0 inset-x-0 z-50 bg-ios-card rounded-t-3xl shadow-2xl max-h-[85vh] overflow-y-auto">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 bg-ios-card rounded-t-3xl shadow-2xl max-h-[85vh] overflow-y-auto">
         {/* ドラッグバー */}
         <div className="flex justify-center pt-3 pb-1">
           <div className="w-10 h-1 bg-black/20 rounded-full" />
