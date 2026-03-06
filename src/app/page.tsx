@@ -6,32 +6,38 @@ import WeightHistory from '../components/WeightHistory';
 import TodayFoodSummary from '../components/TodayFoodSummary';
 import { useAuth } from '@/components/AuthProvider';
 import dummyProfile from '../lib/pms-profile.json';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
-import { collection, query, getDocs, orderBy, limit } from 'firebase/firestore';
+import { collection, query, getDocs, orderBy, limit, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { HealthLog } from '@/lib/types';
 import { ChevronRight, TrendingDown } from 'lucide-react';
 
 export default function Home() {
   const { user } = useAuth();
   const { system_settings } = dummyProfile;
-  const [latestLog, setLatestLog] = useState<any>(null);
+  const [latestLog, setLatestLog] = useState<HealthLog | null>(null);
   const [weightData, setWeightData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!user) return;
     const fetchData = async () => {
       try {
-        const q = query(collection(db, 'daily_logs'), orderBy('date', 'desc'), limit(30));
+        const q = query(
+          collection(db, 'users', user.uid, 'health_log'),
+          orderBy('timestamp', 'desc'),
+          limit(30)
+        );
         const snap = await getDocs(q);
-        const logs = snap.docs.map((d) => d.data());
+        const logs = snap.docs.map((d) => d.data() as HealthLog);
         if (logs.length > 0) setLatestLog(logs[0]);
         setWeightData(
           [...logs].reverse()
-            .filter((l) => l.health_metrics?.weight_kg)
+            .filter((l) => l.weight)
             .map((l) => ({
-              month: format(parseISO(l.date), 'M/d'),
-              weight: l.health_metrics.weight_kg,
+              month: format((l.timestamp as Timestamp).toDate(), 'M/d'),
+              weight: l.weight,
             }))
         );
       } catch (e) {
@@ -41,10 +47,10 @@ export default function Home() {
       }
     };
     fetchData();
-  }, []);
+  }, [user]);
 
   const todayStr = format(new Date(), 'M月d日（E）', { locale: ja });
-  const currentWeight = latestLog?.health_metrics?.weight_kg;
+  const currentWeight = latestLog?.weight;
   const targetWeight = system_settings.app_constants.target_weight_kg;
   const diff = currentWeight ? (currentWeight - targetWeight).toFixed(1) : null;
 
@@ -112,30 +118,28 @@ export default function Home() {
         <div className="grid grid-cols-2 gap-3">
           <StatCard
             label="BMI"
-            value={latestLog?.health_metrics?.bmi ?? '--'}
+            value={latestLog?.bmi ?? '--'}
             unit=""
             color="bg-ios-blue"
             emoji="📊"
           />
           <StatCard
             label="体脂肪率"
-            value={latestLog?.health_metrics?.body_fat_percentage ?? '--'}
+            value={latestLog?.bodyFat ?? '--'}
             unit="%"
             color="bg-ios-orange"
             emoji="🔥"
           />
           <StatCard
             label="除脂肪体重"
-            value={latestLog?.health_metrics?.lean_body_mass ?? '--'}
+            value={latestLog?.lbm ?? '--'}
             unit="kg"
             color="bg-ios-green"
             emoji="💪"
           />
           <StatCard
             label="歩数"
-            value={latestLog?.health_metrics?.steps
-              ? latestLog.health_metrics.steps.toLocaleString()
-              : '--'}
+            value={latestLog?.steps ? latestLog.steps.toLocaleString() : '--'}
             unit="歩"
             color="bg-ios-purple"
             emoji="🚶"
