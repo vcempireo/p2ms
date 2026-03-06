@@ -52,6 +52,12 @@ export default function FoodAnalysisWizard() {
     reader.readAsDataURL(file);
   };
 
+  // IDトークン取得ヘルパー
+  const getAuthHeader = async () => {
+    const idToken = await user?.getIdToken();
+    return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${idToken}` };
+  };
+
   // AI解析
   const handleAnalyze = async () => {
     if (!base64Image) return;
@@ -60,7 +66,7 @@ export default function FoodAnalysisWizard() {
     try {
       const res = await fetch('/api/food/analyze', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: await getAuthHeader(),
         body: JSON.stringify({ base64Image }),
       });
       if (!res.ok) throw new Error((await res.json()).error ?? '解析に失敗しました');
@@ -88,13 +94,12 @@ export default function FoodAnalysisWizard() {
     try {
       const res = await fetch('/api/food/save', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: await getAuthHeader(),
         body: JSON.stringify({
           imageBase64: base64Image,
           mealType,
           mealTime: new Date().toISOString(),
           items,
-          userId: user.uid,
           aiProvider: analysisResult?.aiProvider,
           aiModel: analysisResult?.aiModel,
         }),
