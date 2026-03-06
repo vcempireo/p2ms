@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { signInWithRedirect } from 'firebase/auth';
+import { signInWithPopup, signInWithRedirect } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase';
 
 export default function LoginPage() {
@@ -12,10 +12,16 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
     try {
-      // PWAスタンドアロンモードではpopupがブロックされるためredirectを使用
-      await signInWithRedirect(auth, googleProvider);
+      // まずpopupを試し、ブロックされたらredirectにフォールバック
+      await signInWithPopup(auth, googleProvider);
     } catch (e: any) {
-      setError('ログインに失敗しました。もう一度お試しください。');
+      if (e.code === 'auth/popup-blocked' || e.code === 'auth/disallowed-useragent') {
+        await signInWithRedirect(auth, googleProvider);
+        return;
+      }
+      if (e.code !== 'auth/popup-closed-by-user') {
+        setError('ログインに失敗しました。もう一度お試しください。');
+      }
       setLoading(false);
     }
   };

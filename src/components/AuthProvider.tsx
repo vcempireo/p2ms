@@ -22,28 +22,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    let unsubscribe: () => void;
+    // getRedirectResult完了後にonAuthStateChangedを開始してループを防ぐ
+    let unsubscribe: (() => void) | undefined;
+    let cancelled = false;
 
-    const init = async () => {
-      // リダイレクトログイン後の結果を先に処理してからonAuthStateChangedを開始
-      await getRedirectResult(auth).catch(() => {});
+    getRedirectResult(auth)
+      .catch(() => {})
+      .finally(() => {
+        if (cancelled) return;
+        unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+          if (cancelled) return;
+          setUser(currentUser);
+          setLoading(false);
 
-      unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-        setLoading(false);
-
-        const isPublicPath = PUBLIC_PATHS.includes(pathname);
-
-        if (!currentUser && !isPublicPath) {
-          router.replace('/login');
-        } else if (currentUser && isPublicPath) {
-          router.replace('/');
-        }
+          const isPublicPath = PUBLIC_PATHS.includes(pathname);
+          if (!currentUser && !isPublicPath) {
+            router.replace('/login');
+          } else if (currentUser && isPublicPath) {
+            router.replace('/');
+          }
+        });
       });
-    };
 
-    init();
-    return () => unsubscribe?.();
+    return () => {
+      cancelled = true;
+      unsubscribe?.();
+    };
   }, [pathname, router]);
 
   // 認証確認中はローディング表示
