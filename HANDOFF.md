@@ -124,18 +124,29 @@
   - `format(parseISO(l.date), ...)` → `l.timestamp.toDate()` でDateに変換
   - `uid` は `useAuth()` の `user.uid` から取得する
 
-- [ ] **画像転送の軽量化アイデア（相談）**
-  現在: クライアント側でbase64化 → JSONに乗せてAPIへ送信（元サイズ+33%、タイムアウトリスク大）
+- [ ] **【お願い】Storageアップロード前に画像を圧縮してほしい（コスト削減）**
 
-  **推奨案: Firebase Storage経由**
-  1. クライアントで圧縮（1024px/0.85品質、現状維持）
-  2. `uploadBytes()` で `/food_images/{uid}/{timestamp}.jpg` に直アップ
-  3. `getDownloadURL()` でURLを取得
-  4. `/api/food/analyze` にはURLだけ送る（JSONが数十バイトになる）
-  5. APIサーバー側でURLからfetchして画像バイナリをAIに渡す
+  GASでは1024px / 品質0.85で圧縮していた。P²MSでも同様に実装してほしい。
 
-  メリット: APIペイロード激減・タイムアウト解消・画像がStorageに永続保存される
-  PC2側で `/api/food/analyze` のリクエスト形式変更が必要 → `{ storageUrl: string }` or `{ base64Image: string }` 両対応でもOK
+  ```ts
+  // Canvas で圧縮する例
+  const compress = (file: File): Promise<Blob> =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 1024;
+        const scale = Math.min(MAX / img.width, MAX / img.height, 1);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext('2d')!.drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((b) => resolve(b!), 'image/jpeg', 0.85);
+      };
+      img.src = URL.createObjectURL(file);
+    });
+  ```
+
+  Storage直アップはPC2側で対応済み（imageUrlをAPIに渡す形）。
 
 ---
 
