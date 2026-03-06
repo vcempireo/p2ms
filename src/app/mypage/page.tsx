@@ -85,6 +85,7 @@ const MyPage = () => {
             {user?.displayName ?? 'ユーザー'}
           </h1>
           <p className="text-sm text-ios-secondary">{user?.email}</p>
+          <p className="text-[10px] text-ios-tertiary mt-0.5">uid: {user?.uid}</p>
         </div>
       </header>
 
