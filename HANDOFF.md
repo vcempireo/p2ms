@@ -6,7 +6,7 @@
 
 ## PC1（HEALTHY-PC）→ PC2（heal.local）へ
 
-- [ ] **【重要】`src/app/page.tsx` の体重データ読み込み先を `daily_logs` → `health_log` に変更してほしい**
+- [x] **【重要】`src/app/page.tsx` の体重データ読み込み先を `daily_logs` → `health_log` に変更してほしい**
 
   現状: `collection(db, 'daily_logs')` を読んでいる（旧コレクション）
   修正: `/users/{uid}/health_log` を読むように変更する
