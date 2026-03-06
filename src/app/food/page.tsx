@@ -8,7 +8,7 @@ import { db } from '@/lib/firebase';
 import { useAuth } from '@/components/AuthProvider';
 import { MealSummary, AIProvider } from '@/lib/types';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
 
 const AI_DISPLAY: Record<AIProvider, string> = {
   openai: 'GPT',
@@ -24,6 +24,7 @@ export default function FoodPage() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [mealsByDate, setMealsByDate] = useState<Record<string, MealSummary[]>>({});
   const [loading, setLoading] = useState(true);
+  const [detailMeal, setDetailMeal] = useState<MealSummary | null>(null);
 
   const calendarDays = eachDayOfInterval({
     start: startOfMonth(currentMonth),
@@ -156,7 +157,7 @@ export default function FoodPage() {
 
             {selectedMeals.length > 0 ? (
               selectedMeals.map((meal) => (
-                <MealCard key={meal.id} meal={meal} />
+                <MealCard key={meal.id} meal={meal} onTap={() => setDetailMeal(meal)} />
               ))
             ) : (
               <div className="bg-ios-card rounded-2xl shadow-ios-sm p-8 text-center">
@@ -170,14 +171,19 @@ export default function FoodPage() {
         )}
 
       </div>
+
+      {/* ─── 詳細ボトムシート ─── */}
+      {detailMeal && (
+        <MealDetailSheet meal={detailMeal} onClose={() => setDetailMeal(null)} />
+      )}
     </div>
   );
 }
 
 // ─── 食事カード ─────────────────────────────────────────────────
-function MealCard({ meal }: { meal: MealSummary }) {
+function MealCard({ meal, onTap }: { meal: MealSummary; onTap: () => void }) {
   return (
-    <div className="bg-ios-card rounded-2xl shadow-ios-sm overflow-hidden">
+    <div className="bg-ios-card rounded-2xl shadow-ios-sm overflow-hidden active:opacity-70 transition-opacity cursor-pointer" onClick={onTap}>
       <div className="flex gap-3 p-4">
         {/* サムネイル */}
         <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
@@ -214,5 +220,107 @@ function MealCard({ meal }: { meal: MealSummary }) {
         </span>
       </div>
     </div>
+  );
+}
+
+// ─── 詳細ボトムシート ─────────────────────────────────────────────
+function MealDetailSheet({ meal, onClose }: { meal: MealSummary; onClose: () => void }) {
+  const totalMacros = meal.totalProtein + meal.totalFat + meal.totalCarbs;
+
+  const macros = [
+    { label: 'タンパク質', value: meal.totalProtein, color: 'bg-ios-blue',   textColor: 'text-ios-blue'   },
+    { label: '脂質',       value: meal.totalFat,     color: 'bg-ios-orange', textColor: 'text-ios-orange' },
+    { label: '炭水化物',   value: meal.totalCarbs,   color: 'bg-ios-red',    textColor: 'text-ios-red'    },
+    { label: '食物繊維',   value: meal.totalFiber,   color: 'bg-ios-green',  textColor: 'text-ios-green'  },
+  ];
+
+  return (
+    <>
+      {/* オーバーレイ */}
+      <div className="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm" onClick={onClose} />
+
+      {/* シート本体 */}
+      <div className="fixed bottom-0 inset-x-0 z-50 bg-ios-card rounded-t-3xl shadow-2xl max-h-[85vh] overflow-y-auto">
+        {/* ドラッグバー */}
+        <div className="flex justify-center pt-3 pb-1">
+          <div className="w-10 h-1 bg-black/20 rounded-full" />
+        </div>
+
+        {/* 閉じるボタン */}
+        <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
+          <X className="w-4 h-4 text-ios-secondary" />
+        </button>
+
+        {/* 画像 */}
+        {meal.imageUrl && (
+          <div className="mx-4 mt-2 rounded-2xl overflow-hidden aspect-video">
+            <img src={meal.imageUrl} alt="" className="w-full h-full object-cover" />
+          </div>
+        )}
+
+        <div className="px-4 pt-4 pb-8 space-y-4">
+          {/* タイトル行 */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-semibold text-ios-blue">{meal.mealType}</span>
+            <span className="text-[10px] font-medium bg-blue-50 text-ios-blue px-2 py-0.5 rounded-full">
+              🤖 {AI_DISPLAY[meal.aiProvider] ?? meal.aiProvider}
+            </span>
+          </div>
+
+          {/* カロリー */}
+          <div className="bg-ios-label rounded-2xl p-4 flex justify-between items-center">
+            <span className="text-sm font-medium text-white/70">合計カロリー</span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-4xl font-bold text-white">{Math.round(meal.totalCalories)}</span>
+              <span className="text-sm text-white/70">kcal</span>
+            </div>
+          </div>
+
+          {/* PFCバー */}
+          <div className="bg-ios-bg rounded-2xl p-4 space-y-3">
+            <p className="text-xs font-semibold text-ios-secondary uppercase tracking-wider">PFCバランス</p>
+            {/* 積み上げバー */}
+            <div className="flex rounded-full overflow-hidden h-3 gap-px">
+              {macros.slice(0, 3).map(({ label, value, color }) => (
+                <div
+                  key={label}
+                  className={`${color} transition-all`}
+                  style={{ width: `${totalMacros > 0 ? (value / totalMacros) * 100 : 33}%` }}
+                />
+              ))}
+            </div>
+            {/* 数値 */}
+            <div className="grid grid-cols-2 gap-2">
+              {macros.map(({ label, value, textColor }) => (
+                <div key={label} className="flex items-center justify-between">
+                  <span className="text-xs text-ios-secondary">{label}</span>
+                  <span className={`text-sm font-semibold ${textColor}`}>{value.toFixed(1)}g</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* AIコメント */}
+          {meal.aiSummary && (
+            <div className="bg-blue-50 rounded-2xl p-4 space-y-2">
+              <p className="text-xs font-semibold text-ios-blue">🤖 AIコメント</p>
+              <p className="text-sm text-ios-label leading-relaxed">{meal.aiSummary}</p>
+            </div>
+          )}
+
+          {/* 食品リスト */}
+          <div className="space-y-2">
+            <p className="text-xs font-semibold text-ios-secondary uppercase tracking-wider">認識した食品</p>
+            <div className="bg-ios-bg rounded-2xl overflow-hidden">
+              {meal.menus.map((menu, i) => (
+                <div key={i} className={`px-4 py-3 text-sm text-ios-label ${i < meal.menus.length - 1 ? 'border-b border-black/[0.06]' : ''}`}>
+                  {menu}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
