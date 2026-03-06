@@ -22,6 +22,8 @@
 - [ ] `/api/food/save` と `/api/health/sync` のリクエストボディから `userId` を削除済み。
   代わりに `Authorization: Bearer {idToken}` ヘッダーが必須。
 
+- [ ] 食事記録の画像入力にギャラリー選択を追加してほしい。カメラ起動だけでなく「ライブラリから選ぶ」選択肢もUIに置く（`FoodAnalysisWizard` の撮影ステップ）。
+
 - [ ] Soul Architectureのテストデータ投入済み:
   - パス: `/users/tqUkyNIfUrXmD7hfemPbcny2DAY2/soul_architecture/core`
   - `content` フィールドにMarkdown全文が入っている
