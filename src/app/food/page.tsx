@@ -241,20 +241,27 @@ function MealDetailSheet({ meal, onClose }: { meal: MealSummary; onClose: () => 
 
       {/* シート本体 */}
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 bg-ios-card rounded-t-3xl shadow-2xl max-h-[85vh] overflow-y-auto">
-        {/* ドラッグバー */}
-        <div className="flex justify-center pt-3 pb-1">
-          <div className="w-10 h-1 bg-black/20 rounded-full" />
-        </div>
-
-        {/* 閉じるボタン */}
-        <button onClick={onClose} className="absolute top-4 right-4 w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
-          <X className="w-4 h-4 text-ios-secondary" />
-        </button>
-
-        {/* 画像 */}
-        {meal.imageUrl && (
-          <div className="mx-4 mt-2 rounded-2xl overflow-hidden aspect-video">
+        {/* 画像（最上部・角丸あり） */}
+        {meal.imageUrl ? (
+          <div className="relative rounded-t-3xl overflow-hidden aspect-video">
             <img src={meal.imageUrl} alt="" className="w-full h-full object-cover" />
+            {/* ドラッグバー（画像上にオーバーレイ） */}
+            <div className="absolute top-3 inset-x-0 flex justify-center">
+              <div className="w-10 h-1 bg-white/60 rounded-full" />
+            </div>
+            {/* 閉じるボタン（画像上にオーバーレイ） */}
+            <button onClick={onClose} className="absolute top-3 right-3 w-8 h-8 bg-black/30 backdrop-blur-sm rounded-full flex items-center justify-center">
+              <X className="w-4 h-4 text-white" />
+            </button>
+          </div>
+        ) : (
+          <div className="relative pt-3">
+            <div className="flex justify-center pb-1">
+              <div className="w-10 h-1 bg-black/20 rounded-full" />
+            </div>
+            <button onClick={onClose} className="absolute top-3 right-4 w-8 h-8 bg-black/10 rounded-full flex items-center justify-center">
+              <X className="w-4 h-4 text-ios-secondary" />
+            </button>
           </div>
         )}
 
