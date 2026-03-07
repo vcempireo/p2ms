@@ -83,9 +83,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'data.metricsが見つかりません' }, { status: 400 });
   }
 
-  // デバッグ: 受信したメトリクス名を全て出力
-  console.log('[webhook] 受信メトリクス名一覧:', metrics.map((m) => `${m.name}(${m.data?.length ?? 0}件)`));
-
   // 日付単位でデータをまとめる（同じ日のデータは1ドキュメントにマージ）
   const dayMap = new Map<string, Record<string, unknown>>();
 
