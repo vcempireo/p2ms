@@ -296,7 +296,7 @@ function MealDetailSheet({ meal, onClose, onDelete }: {
           </div>
         )}
 
-        <div className="px-4 pt-4 pb-8 space-y-4">
+        <div className="px-4 pt-4 pb-28 space-y-4">
           {/* タイトル行 */}
           <div className="flex items-center justify-between">
             <span className="text-sm font-semibold text-ios-blue">{meal.mealType}</span>
