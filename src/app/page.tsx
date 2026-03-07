@@ -119,6 +119,11 @@ export default function Home() {
                 </span>
                 <span className="text-lg text-ios-secondary font-medium">kg</span>
               </div>
+              {latestWeight && (
+                <p className="text-xs text-ios-tertiary mt-0.5">
+                  {format((latestWeight.timestamp as Timestamp).toDate(), 'yy/MM/dd')} 時点
+                </p>
+              )}
               {diff && (
                 <div className="flex items-center gap-1 mt-1">
                   <TrendingDown className="w-3.5 h-3.5 text-ios-green" />
@@ -290,7 +295,7 @@ function StatDetailSheet({ statKey, logs, onClose }: {
             </div>
             {latest && (
               <p className="text-xs text-ios-tertiary mt-1">
-                {format((latest.timestamp as Timestamp).toDate(), 'yyyy年M月d日', { locale: ja })} 時点
+                {format((latest.timestamp as Timestamp).toDate(), 'yy/MM/dd')} 時点
               </p>
             )}
           </div>

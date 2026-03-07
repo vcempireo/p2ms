@@ -118,7 +118,7 @@ export default function WeightPage() {
           </div>
           {latestWithWeight && (
             <p className="text-xs text-ios-tertiary mt-1">
-              {format((latestWithWeight.timestamp as Timestamp).toDate(), 'yyyy年M月d日', { locale: ja })} 時点
+              {format((latestWithWeight.timestamp as Timestamp).toDate(), 'yy/MM/dd')} 時点
             </p>
           )}
         </div>
