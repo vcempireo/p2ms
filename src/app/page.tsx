@@ -245,6 +245,11 @@ function StatDetailSheet({ statKey, logs, onClose }: {
 }) {
   const cfg = STAT_CONFIG[statKey];
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
   // チャートデータ（古い順・直近60日）
   const cutoff = subDays(new Date(), 60);
   const chartData = [...logs]

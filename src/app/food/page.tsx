@@ -258,6 +258,11 @@ function MealDetailSheet({ meal, onClose, onDelete }: {
   const [deleting, setDeleting] = useState(false);
   const totalMacros = meal.totalProtein + meal.totalFat + meal.totalCarbs;
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
   const macros = [
     { label: 'タンパク質', value: meal.totalProtein, color: 'bg-ios-blue',   textColor: 'text-ios-blue'   },
     { label: '脂質',       value: meal.totalFat,     color: 'bg-ios-orange', textColor: 'text-ios-orange' },
