@@ -2,17 +2,27 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Timestamp } from 'firebase-admin/firestore';
 import { getAdminDb } from '@/lib/firebase-admin';
 
+// 初回エクスポート時は大量データが来るため60秒に延長
+export const maxDuration = 60;
+
 // Health Auto Export アプリからのwebhookを受け取るエンドポイント
 // 認証: URLパラメータ ?uid=xxx&token=xxx
 // Health Auto ExportはBearer認証ヘッダーを送れないためURL認証を使用する
 
 // Health Auto Export のメトリクス名 → 内部フィールド名のマッピング
+// HAEのバージョンによってスネークケース・キャメルケースが混在するため両方登録
 const METRIC_MAP: Record<string, string> = {
   body_mass: 'weight',
+  bodyMass: 'weight',
+  weight_body_mass: 'weight',
   body_fat_percentage: 'bodyFat',
+  bodyFatPercentage: 'bodyFat',
   body_mass_index: 'bmi',
+  bodyMassIndex: 'bmi',
   lean_body_mass: 'lbm',
+  leanBodyMass: 'lbm',
   step_count: 'steps',
+  stepCount: 'steps',
 };
 
 interface HaeDataPoint {
@@ -33,10 +43,14 @@ interface HaePayload {
   };
 }
 
-// "2024-01-15 07:30:00 +0900" → JST日付キー "2024-01-15"
-// HAEはオフセット付きで送ってくる。UTC変換後に+9hしてJST日付を取り出す
+// "2024-01-15 07:30:00 +0900" → Date
+// replace: 日時間のスペース→T、オフセット前のスペース→除去 で ISO 8601 形式にする
+const parseHaeDate = (haeDate: string): Date =>
+  new Date(haeDate.replace(' ', 'T').replace(' ', ''));
+
+// HAE日付文字列 → JST日付キー "2024-01-15"
 const toDateKey = (haeDate: string): string => {
-  const d = new Date(haeDate.replace(' ', 'T'));
+  const d = parseHaeDate(haeDate);
   const jstMs = d.getTime() + 9 * 60 * 60 * 1000;
   return new Date(jstMs).toISOString().slice(0, 10);
 };
@@ -80,13 +94,13 @@ export async function POST(req: NextRequest) {
       const dateKey = toDateKey(point.date);
       if (!dayMap.has(dateKey)) {
         dayMap.set(dateKey, {
-          timestamp: Timestamp.fromDate(new Date(point.date.replace(' ', 'T'))),
+          timestamp: Timestamp.fromDate(parseHaeDate(point.date)),
         });
       }
       const record = dayMap.get(dateKey)!;
       record[fieldName] = point.qty;
       // timestampは最後に来たデータのものを保持
-      record.timestamp = Timestamp.fromDate(new Date(point.date.replace(' ', 'T')));
+      record.timestamp = Timestamp.fromDate(parseHaeDate(point.date));
     }
   }
 
