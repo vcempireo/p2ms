@@ -37,12 +37,13 @@ const MAX_BATCH = 400;
 // バッチ書き込みヘルパー
 // ============================================================
 async function commitBatches(
-  items: { ref: FirebaseFirestore.DocumentReference; data: Record<string, unknown> }[]
+  items: { ref: FirebaseFirestore.DocumentReference; data: Record<string, unknown> }[],
+  merge = false
 ) {
   for (let i = 0; i < items.length; i += MAX_BATCH) {
     const batch = db.batch();
     const chunk = items.slice(i, i + MAX_BATCH);
-    chunk.forEach(({ ref, data }) => batch.set(ref, data));
+    chunk.forEach(({ ref, data }) => batch.set(ref, data, { merge }));
     await batch.commit();
     console.log(`  ${i + chunk.length}/${items.length} 件投入済み...`);
   }
@@ -153,12 +154,12 @@ async function importHealthLog() {
     if (lbm > 0) data.lbm = lbm;
     if (steps > 0) data.steps = steps;
 
-    // タイムスタンプをドキュメントIDに使う（重複防止）
-    const docId = dateFormatted + 'T07-00';
-    items.push({ ref: userRef.collection('health_log').doc(docId), data });
+    // JST日付をドキュメントIDに使う（1日1ドキュメント設計）
+    items.push({ ref: userRef.collection('health_log').doc(dateFormatted), data });
   }
 
-  await commitBatches(items);
+  // merge: true で書き込み（同日データが複数回来てもマージ）
+  await commitBatches(items, true);
   console.log(`[health_log] 完了（${items.length}件）`);
 }
 

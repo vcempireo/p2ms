@@ -84,8 +84,8 @@ export async function POST(req: NextRequest) {
 
     await batch.commit();
 
-    // aiSummaryをバックグラウンドで生成してFirestoreを更新（失敗しても保存は完了扱い）
-    generateMealSummary({
+    // aiSummaryを生成してFirestoreを更新（Vercelはレスポンス後に処理が止まるためawaitが必要）
+    const aiSummary = await generateMealSummary({
       mealType,
       menus: items.map((i) => i.menu),
       totalCalories,
@@ -93,11 +93,10 @@ export async function POST(req: NextRequest) {
       totalFat,
       totalCarbs,
       totalFiber,
-    }).then((aiSummary) => {
-      if (aiSummary) {
-        mealSummaryRef.update({ aiSummary }).catch(() => {});
-      }
     });
+    if (aiSummary) {
+      await mealSummaryRef.update({ aiSummary }).catch(() => {});
+    }
 
     return NextResponse.json({ success: true, mealSummaryId: mealSummaryRef.id });
   } catch (e: any) {

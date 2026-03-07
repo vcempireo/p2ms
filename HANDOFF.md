@@ -6,54 +6,7 @@
 
 ## PC1（HEALTHY-PC）→ PC2（heal.local）へ
 
-- [ ] **【重要】health_log のドキュメント設計を変更した。PC2側のデータ投入スクリプトも合わせてほしい**
-
-  **変更内容:**
-  ```
-  旧: docId = タイムスタンプベース（2024-01-15T07-30-00-000）、メトリクスごとに別ドキュメント
-  新: docId = JST日付（2024-01-15）、同じ日のデータは1ドキュメントにマージ
-  ```
-
-  **新しいドキュメント構造:**
-  ```ts
-  // /users/{uid}/health_log/2024-01-15
-  {
-    timestamp: Timestamp,  // その日の最後の計測時刻
-    weight?: number,
-    bodyFat?: number,
-    bmi?: number,
-    lbm?: number,
-    steps?: number,
-  }
-  ```
-
-  **理由:**
-  - 1日1ドキュメントにすることで「最新のBMI」を探すために全件スキャンが不要になる
-  - merge: true で書き込むのでHealthKitが別タイムスタンプで送ってきても同日はまとまる
-  - NoSQLとして自然な設計（日付がキー＝アクセスパターンと一致）
-
-  **対応をお願いしたいこと:**
-  - CSVインポートスクリプト（`scripts/`）があれば docId を日付ベースに変更してほしい
-  - `/api/health/sync` と `/api/health/webhook` はPC1側で修正済み
-  - 既存の旧形式ドキュメントは放置で良い（新しいデータが来たら日付docが作られるので）
-
-- [ ] **【情報】Health Auto Export webhook エンドポイントをPC1側で実装済み**
-
-  PC2担当範囲だが、UI実装に合わせてAPI側も作成した。レビューしてほしい。
-
-  作成したファイル:
-  - `src/app/api/health/webhook/route.ts` - HAEのPOSTデータを受け取る
-  - `src/app/api/health/webhook-token/route.ts` - トークン生成・取得
-
-  認証方式: URLパラメータ `?uid=xxx&token=xxx`（HAEはBearer送れないため）
-  トークン保存先: Firestore `/users/{uid}` の `webhookToken` フィールド
-
-  Health Auto Export のメトリクス名マッピング:
-  - `body_mass` → `weight`
-  - `body_fat_percentage` → `bodyFat`
-  - `body_mass_index` → `bmi`
-  - `lean_body_mass` → `lbm`
-  - `step_count` → `steps`
+（現在対応待ちなし）
 
 ---
 

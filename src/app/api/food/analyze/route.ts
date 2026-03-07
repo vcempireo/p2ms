@@ -23,23 +23,40 @@ export async function POST(req: NextRequest) {
     }
     console.log('[analyze] 3. base64受信');
 
-    // base64 → Firebase Storage にアップロード（Admin SDKでCORSなし）
+    // StorageアップロードとAI解析を並行実行
     const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, '');
     const imageBuffer = Buffer.from(base64Data, 'base64');
-    const adminStorage = await getAdminStorage();
-    const bucket = adminStorage.bucket();
     const fileName = `users/${uid}/meals/${Date.now()}.jpg`;
-    const file = bucket.file(fileName);
-    await file.save(imageBuffer, { metadata: { contentType: 'image/jpeg' } });
-    await file.makePublic();
-    const imageUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
-    console.log('[analyze] 4. Storage アップロード完了:', imageUrl.slice(0, 60) + '...');
 
-    // OpenAIに base64 を渡して解析
-    const result = await analyzeFoodImage(base64Image);
-    console.log('[analyze] 5. 解析完了 items:', result.items.length);
+    // Storage アップロード（失敗しても解析は止めない）
+    const uploadPromise = (async (): Promise<string> => {
+      const bucketName = process.env.FIREBASE_STORAGE_BUCKET
+        ?? process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
+      if (!bucketName) throw new Error('FIREBASE_STORAGE_BUCKET が未設定です');
+      const adminStorage = await getAdminStorage();
+      const bucket = adminStorage.bucket(bucketName);
+      const file = bucket.file(fileName);
+      const downloadToken = crypto.randomUUID();
+      await file.save(imageBuffer, {
+        metadata: {
+          contentType: 'image/jpeg',
+          metadata: { firebaseStorageDownloadTokens: downloadToken },
+        },
+      });
+      return `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(fileName)}?alt=media&token=${downloadToken}`;
+    })().catch((e) => {
+      // Storageエラーは警告に留め、解析は続行
+      console.warn('[analyze] Storage アップロード失敗（無視して続行）:', e.message);
+      return '';
+    });
 
-    // imageUrl も一緒に返す（クライアントが save 時に使う）
+    // AI解析（base64を直接渡す）
+    const [imageUrl, result] = await Promise.all([
+      uploadPromise,
+      analyzeFoodImage(base64Image),
+    ]);
+    console.log('[analyze] 4. 完了 items:', result.items.length, 'imageUrl:', imageUrl ? '保存済' : '未保存');
+
     return NextResponse.json({ ...result, imageUrl });
   } catch (e: any) {
     console.error('[/api/food/analyze] エラー:', e);
