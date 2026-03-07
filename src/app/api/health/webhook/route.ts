@@ -10,12 +10,18 @@ export const maxDuration = 60;
 // Health Auto ExportはBearer認証ヘッダーを送れないためURL認証を使用する
 
 // Health Auto Export のメトリクス名 → 内部フィールド名のマッピング
+// HAEのバージョンによってスネークケース・キャメルケースが混在するため両方登録
 const METRIC_MAP: Record<string, string> = {
   body_mass: 'weight',
+  bodyMass: 'weight',
   body_fat_percentage: 'bodyFat',
+  bodyFatPercentage: 'bodyFat',
   body_mass_index: 'bmi',
+  bodyMassIndex: 'bmi',
   lean_body_mass: 'lbm',
+  leanBodyMass: 'lbm',
   step_count: 'steps',
+  stepCount: 'steps',
 };
 
 interface HaeDataPoint {
