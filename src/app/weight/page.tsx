@@ -19,12 +19,12 @@ const PERIOD_LABELS: Record<Period, string> = {
   'ALL': '全期間',
 };
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload }: any) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-ios-label/90 backdrop-blur-sm text-white text-xs px-3 py-2 rounded-xl">
       <p className="font-semibold">{payload[0].value} kg</p>
-      <p className="text-white/70">{label}</p>
+      <p className="text-white/70">{payload[0].payload.fullDate}</p>
     </div>
   );
 };
@@ -65,7 +65,8 @@ export default function WeightPage() {
     return withWeight
       .filter(l => !cutoff || (l.timestamp as Timestamp).toDate() >= cutoff)
       .map(l => ({
-        date: format((l.timestamp as Timestamp).toDate(), period === '1M' ? 'M/d' : 'M/d', { locale: ja }),
+        date: format((l.timestamp as Timestamp).toDate(), 'M/d'),
+        fullDate: format((l.timestamp as Timestamp).toDate(), 'yy/MM/dd'),
         weight: l.weight,
       }));
   }, [logs, period]);

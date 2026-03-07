@@ -247,6 +247,7 @@ function StatDetailSheet({ statKey, logs, onClose }: {
     .filter(l => l[cfg.field] != null && (l.timestamp as Timestamp).toDate() >= cutoff)
     .map(l => ({
       date: format((l.timestamp as Timestamp).toDate(), 'M/d'),
+      fullDate: format((l.timestamp as Timestamp).toDate(), 'yy/MM/dd'),
       value: l[cfg.field] as number,
     }));
 
@@ -304,11 +305,11 @@ function StatDetailSheet({ statKey, logs, onClose }: {
                     <XAxis dataKey="date" tick={{ fill: '#8E8E93', fontSize: 10 }} tickLine={false} axisLine={false} />
                     <YAxis tick={{ fill: '#8E8E93', fontSize: 10 }} tickLine={false} axisLine={false} domain={['dataMin - 1', 'dataMax + 1']} />
                     <Tooltip
-                      content={({ active, payload, label }) =>
+                      content={({ active, payload }) =>
                         active && payload?.length ? (
                           <div className="bg-ios-label/90 text-white text-xs px-3 py-2 rounded-xl">
                             <p className="font-semibold">{payload[0].value}{cfg.unit}</p>
-                            <p className="text-white/70">{label}</p>
+                            <p className="text-white/70">{payload[0].payload.fullDate}</p>
                           </div>
                         ) : null
                       }
