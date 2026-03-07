@@ -246,8 +246,16 @@ function StatDetailSheet({ statKey, logs, onClose }: {
   const cfg = STAT_CONFIG[statKey];
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
+    const y = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${y}px`;
+    document.body.style.width = '100%';
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, y);
+    };
   }, []);
 
   // チャートデータ（古い順・直近60日）
