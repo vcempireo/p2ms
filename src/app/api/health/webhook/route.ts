@@ -14,6 +14,7 @@ export const maxDuration = 60;
 const METRIC_MAP: Record<string, string> = {
   body_mass: 'weight',
   bodyMass: 'weight',
+  weight_body_mass: 'weight',
   body_fat_percentage: 'bodyFat',
   bodyFatPercentage: 'bodyFat',
   body_mass_index: 'bmi',
