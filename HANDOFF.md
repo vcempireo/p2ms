@@ -50,3 +50,11 @@ Server (/api/food/save):
 /users/{uid}/soul_architecture/core # Soul Architecture（contentフィールドにMarkdown）
 /daily_logs/{docId}                 # 旧データ（読み取り専用）
 ```
+
+---
+
+## 📩 最新のタスク・指示 (LINEからの入力)
+> **日時**: 2026/3/7 17:33:46
+> **指名対象**: [@FE / フロントエンド]
+> **指示内容**:
+> テスト指示だよ
