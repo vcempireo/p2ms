@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import SoulOSViewer from '@/components/SoulOSViewer';
 import { Copy, Check, RefreshCw } from 'lucide-react';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 // 個人データの型
 interface UserProfile {
@@ -60,6 +62,21 @@ const MyPage = () => {
               birthPlace: soulData.profile.birthPlace,
             }));
           }
+        }
+
+        // profile/core から身体データ取得
+        const profileSnap = await getDoc(doc(db, 'users', user.uid, 'profile', 'core'));
+        if (profileSnap.exists()) {
+          const p = profileSnap.data();
+          setProfile(prev => ({
+            ...prev,
+            birthDate:  p.birthDate  ?? prev.birthDate,
+            birthTime:  p.birthTime  ?? prev.birthTime,
+            birthPlace: p.birthPlace ?? prev.birthPlace,
+            bloodType:  p.bloodType,
+            ethnicity:  p.ethnicity,
+            height:     p.height,
+          }));
         }
 
         // webhookトークン取得
