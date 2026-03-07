@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from 'date-fns';
 import { ja } from 'date-fns/locale';
-import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs, orderBy, Timestamp, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useAuth } from '@/components/AuthProvider';
 import { MealSummary, AIProvider } from '@/lib/types';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, X, Trash2 } from 'lucide-react';
 
 const AI_DISPLAY: Record<AIProvider, string> = {
   openai: 'GPT',
@@ -58,6 +58,31 @@ export default function FoodPage() {
   const selectedKey   = selectedDate ? format(selectedDate, 'yyyy-MM-dd') : null;
   const selectedMeals = selectedKey ? (mealsByDate[selectedKey] ?? []) : [];
   const selectedTotal = selectedMeals.reduce((s, m) => s + m.totalCalories, 0);
+
+  // 食事記録を削除する
+  const handleDelete = async (meal: MealSummary) => {
+    if (!user || !meal.id) return;
+    // meal_summary を削除
+    await deleteDoc(doc(db, 'users', user.uid, 'meal_summary', meal.id));
+    // 関連する food_raw_log を削除
+    const rawQ = query(
+      collection(db, 'users', user.uid, 'food_raw_log'),
+      where('mealSummaryId', '==', meal.id)
+    );
+    const rawSnap = await getDocs(rawQ);
+    await Promise.all(rawSnap.docs.map(d => deleteDoc(d.ref)));
+    // UIから削除
+    setMealsByDate(prev => {
+      const key = format((meal.mealTime as Timestamp).toDate(), 'yyyy-MM-dd');
+      const updated = (prev[key] ?? []).filter(m => m.id !== meal.id);
+      if (updated.length === 0) {
+        const { [key]: _, ...rest } = prev;
+        return rest;
+      }
+      return { ...prev, [key]: updated };
+    });
+    setDetailMeal(null);
+  };
 
   return (
     <div className="min-h-screen bg-ios-bg page-content">
@@ -174,7 +199,7 @@ export default function FoodPage() {
 
       {/* ─── 詳細ボトムシート ─── */}
       {detailMeal && (
-        <MealDetailSheet meal={detailMeal} onClose={() => setDetailMeal(null)} />
+        <MealDetailSheet meal={detailMeal} onClose={() => setDetailMeal(null)} onDelete={handleDelete} />
       )}
     </div>
   );
@@ -224,7 +249,13 @@ function MealCard({ meal, onTap }: { meal: MealSummary; onTap: () => void }) {
 }
 
 // ─── 詳細ボトムシート ─────────────────────────────────────────────
-function MealDetailSheet({ meal, onClose }: { meal: MealSummary; onClose: () => void }) {
+function MealDetailSheet({ meal, onClose, onDelete }: {
+  meal: MealSummary;
+  onClose: () => void;
+  onDelete: (meal: MealSummary) => Promise<void>;
+}) {
+  const [confirming, setConfirming] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const totalMacros = meal.totalProtein + meal.totalFat + meal.totalCarbs;
 
   const macros = [
@@ -326,6 +357,40 @@ function MealDetailSheet({ meal, onClose }: { meal: MealSummary; onClose: () => 
               ))}
             </div>
           </div>
+
+          {/* 削除ボタン */}
+          {!confirming ? (
+            <button
+              onClick={() => setConfirming(true)}
+              className="w-full flex items-center justify-center gap-2 py-3 text-ios-red text-sm font-medium active:opacity-60"
+            >
+              <Trash2 className="w-4 h-4" />
+              この記録を削除
+            </button>
+          ) : (
+            <div className="bg-red-50 rounded-2xl p-4 space-y-3">
+              <p className="text-sm text-ios-label font-medium text-center">この記録を削除しますか？</p>
+              <p className="text-xs text-ios-secondary text-center">削除した記録は元に戻せません</p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setConfirming(false)}
+                  className="flex-1 py-2.5 bg-ios-bg rounded-xl text-sm font-medium text-ios-label active:opacity-60"
+                >
+                  キャンセル
+                </button>
+                <button
+                  onClick={async () => {
+                    setDeleting(true);
+                    await onDelete(meal);
+                  }}
+                  disabled={deleting}
+                  className="flex-1 py-2.5 bg-ios-red rounded-xl text-sm font-medium text-white active:opacity-80"
+                >
+                  {deleting ? '削除中...' : '削除する'}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
